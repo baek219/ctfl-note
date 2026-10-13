@@ -1,0 +1,1012 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#14203a">
+<link rel="manifest" href="manifest.json">
+<title>CTFL 합격노트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+/* 레이아웃: 모바일 단일 컬럼 공부 앱. OMR 답안지의 붉은 인쇄선과 검은 마킹을 모티프로, 장마다 고유 색 */
+:root{
+  --bg:#edf1f4; --surface:#ffffff; --surface2:#f6f8fa; --ink:#14203a; --muted:#5d6a7e; --line:#d9e0e7;
+  --accent:#e5405e; --accent-soft:#fde6ea; --hero:#14203a; --hero-fg:#f3f5f9; --hero-muted:#a9b4c8;
+  --mark:#14203a; --mark-fg:#ffffff;
+  --ok:#0d9874; --ok-soft:#daf3ec; --warn:#c97a06; --warn-soft:#fcefd8; --bad:#d4500f; --bad-soft:#fde8dc;
+  --c1:#3a6ee0; --c2:#0d9874; --c3:#8556e8; --c4:#e5405e; --c5:#c97a06; --c6:#0b8bb0;
+  --h0:#e3e8ed; --h1:#f8c3cd; --h2:#ee7d93; --h3:#c92c4a;
+  --f-display:"Do Hyeon","IBM Plex Sans KR",sans-serif;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:16px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e121a; --surface:#171d28; --surface2:#1d2431; --ink:#e8ecf3; --muted:#9ba5b8; --line:#2a3242;
+  --accent:#ff6b85; --accent-soft:#3b1d27; --hero:#1f2a40; --hero-fg:#f3f5f9; --hero-muted:#a9b4c8;
+  --mark:#e8ecf3; --mark-fg:#0e121a;
+  --ok:#45c99d; --ok-soft:#14302a; --warn:#f0a83a; --warn-soft:#3a2c14; --bad:#ff8a4c; --bad-soft:#3b2318;
+  --c1:#7aa2ff; --c2:#45c99d; --c3:#ad8cff; --c4:#ff6b85; --c5:#f0a83a; --c6:#4cc3e6;
+  --h0:#222a38; --h1:#5a2433; --h2:#a33a55; --h3:#ff6b85; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e121a; --surface:#171d28; --surface2:#1d2431; --ink:#e8ecf3; --muted:#9ba5b8; --line:#2a3242;
+  --accent:#ff6b85; --accent-soft:#3b1d27; --hero:#1f2a40; --hero-fg:#f3f5f9; --hero-muted:#a9b4c8;
+  --mark:#e8ecf3; --mark-fg:#0e121a;
+  --ok:#45c99d; --ok-soft:#14302a; --warn:#f0a83a; --warn-soft:#3a2c14; --bad:#ff8a4c; --bad-soft:#3b2318;
+  --c1:#7aa2ff; --c2:#45c99d; --c3:#ad8cff; --c4:#ff6b85; --c5:#f0a83a; --c6:#4cc3e6;
+  --h0:#222a38; --h1:#5a2433; --h2:#a33a55; --h3:#ff6b85; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:620px;margin:0 auto;padding-inline:16px;padding-block:18px 118px}
+h1,h2,h3{text-wrap:balance;line-height:1.25;margin:0;font-weight:400}
+h1{font-family:var(--f-display);font-size:1.9rem;letter-spacing:-.01em}
+h2{font-family:var(--f-display);font-size:1.45rem}
+h3{font-family:var(--f-body);font-weight:700;font-size:1.04rem}
+p{margin:0}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)} .small{font-size:.87rem} .tiny{font-size:.76rem}
+.stack{display:flex;flex-direction:column;gap:14px}
+.stack.tight{gap:8px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.between{justify-content:space-between}
+.label{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.card{background:var(--surface);border-radius:var(--r);padding:18px;box-shadow:0 1px 0 var(--line)}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-block:4px 2px}
+.top .label{color:var(--accent)}
+/* 버튼 */
+.btn{appearance:none;border:0;background:var(--accent);color:#fff;font:inherit;font-weight:700;padding:13px 18px;border-radius:12px;cursor:pointer;min-height:48px;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn.dark{background:var(--mark);color:var(--mark-fg)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+.btn.soft{background:var(--surface2);color:var(--ink)}
+.btn.sm{padding:8px 13px;min-height:38px;font-size:.88rem;border-radius:10px}
+.btn.wide{width:100%}
+.btn:disabled{opacity:.4;cursor:default}
+.btn:active:not(:disabled){transform:translateY(1px)}
+:is(.btn,.chip,.opt,.cell,.tab,.tile,.flip,.chap-row,input,textarea,summary):focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.chip{appearance:none;border:0;box-shadow:inset 0 0 0 1.5px var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:.9rem;padding:8px 13px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--mark);color:var(--mark-fg);box-shadow:none}
+/* 탭바 */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom,0px);z-index:10}
+.tab{appearance:none;border:0;background:none;color:var(--muted);font:inherit;font-size:.74rem;font-weight:600;padding:9px 2px 11px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
+.tab .ic{width:26px;height:26px;border:2px solid currentColor;border-radius:50%;display:grid;place-items:center;font-family:var(--f-mono);font-size:.66rem;font-weight:600}
+.tab[aria-current="page"]{color:var(--ink)}
+.tab[aria-current="page"] .ic{background:var(--accent);border-color:var(--accent);color:#fff}
+/* 홈 히어로 */
+.hero{background:var(--hero);color:var(--hero-fg);border-radius:22px;padding:20px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-30px;top:-30px;width:140px;height:140px;border-radius:50%;border:2px dashed rgba(255,255,255,.12)}
+.ring{width:108px;height:108px;position:relative}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .v{position:absolute;inset:0;display:grid;place-items:center;text-align:center;line-height:1.1}
+.ring .v b{font-family:var(--f-display);font-size:1.9rem;font-weight:400}
+.ring .v span{font-size:.68rem;color:var(--hero-muted)}
+.hero .dd{font-family:var(--f-display);font-size:2.3rem;line-height:1}
+.hero .sub{color:var(--hero-muted);font-size:.86rem}
+.hero input[type=date]{background:rgba(255,255,255,.08);color:var(--hero-fg);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:6px 8px;font:inherit;font-size:.85rem;color-scheme:dark;max-width:100%}
+.hero .pills{display:flex;gap:6px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border-radius:999px;padding:4px 10px;font-size:.8rem;font-weight:600}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block}
+/* 목표 */
+.goal{display:flex;flex-direction:column;gap:8px}
+.goalbar{height:12px;border-radius:6px;background:var(--surface2);overflow:hidden;box-shadow:inset 0 0 0 1px var(--line)}
+.goalbar i{display:block;height:100%;background:repeating-linear-gradient(-45deg,var(--accent) 0 8px,color-mix(in srgb,var(--accent) 80%,#fff) 8px 16px);border-radius:6px}
+/* 퀵 타일 */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{appearance:none;border:0;text-align:left;font:inherit;color:var(--ink);background:var(--surface);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:6px;cursor:pointer;box-shadow:0 1px 0 var(--line);min-width:0}
+.tile .sq{width:34px;height:34px;border-radius:10px;background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--c);display:grid;place-items:center;font-family:var(--f-mono);font-weight:600;font-size:.8rem}
+.tile b{font-size:.98rem}
+.tile span{font-size:.8rem;color:var(--muted)}
+/* 장 진행 */
+.chaps{display:flex;flex-direction:column;gap:12px}
+.chap-line{display:grid;grid-template-columns:28px 1fr auto;gap:4px 10px;align-items:center}
+.dot{width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font-family:var(--f-mono);font-size:.78rem;font-weight:600;grid-row:span 2}
+.track{height:7px;background:var(--surface2);border-radius:4px;overflow:hidden;grid-column:2/4;box-shadow:inset 0 0 0 1px var(--line)}
+.track i{display:block;height:100%;background:var(--c);border-radius:4px}
+/* 히트맵 */
+.heat{display:grid;grid-template-rows:repeat(7,1fr);grid-auto-flow:column;grid-auto-columns:1fr;gap:4px}
+.heat i{aspect-ratio:1;border-radius:4px;background:var(--h0);display:block}
+.heat i.l1{background:var(--h1)} .heat i.l2{background:var(--h2)} .heat i.l3{background:var(--h3)}
+.heat i.today{outline:2px solid var(--ink);outline-offset:1px}
+.legend{display:flex;gap:4px;align-items:center}
+.legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+/* 차트 */
+.spark{display:flex;align-items:flex-end;gap:6px;height:90px;position:relative;padding-top:6px}
+.spark .b{flex:1;background:var(--c4);border-radius:6px 6px 2px 2px;position:relative;min-width:0}
+.spark .b.fail{background:var(--line)}
+.spark .b span{position:absolute;top:-18px;left:0;right:0;text-align:center;font-family:var(--f-mono);font-size:.68rem;color:var(--muted)}
+.spark .pass-line{position:absolute;left:0;right:0;border-top:1.5px dashed var(--ok)}
+.info{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.info div{background:var(--surface2);border-radius:12px;padding:12px}
+.info b{display:block;font-family:var(--f-display);font-size:1.5rem;font-weight:400;line-height:1.1}
+/* 개념 */
+details.chap{background:var(--surface);border-radius:var(--r);box-shadow:0 1px 0 var(--line);overflow:hidden}
+details.chap>summary{list-style:none;cursor:pointer;padding:16px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border-left:5px solid var(--c)}
+details.chap>summary::-webkit-details-marker{display:none}
+.num{width:38px;height:38px;border-radius:12px;background:color-mix(in srgb,var(--c) 15%,transparent);color:var(--c);display:grid;place-items:center;font-family:var(--f-display);font-size:1.25rem}
+.concepts{padding:4px 14px 16px;display:flex;flex-direction:column;gap:12px}
+.concept{border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;background:var(--surface2)}
+.concept.done{box-shadow:inset 0 0 0 2px var(--ok)}
+.box{padding:10px 12px;border-radius:10px;font-size:.94rem;background:var(--surface)}
+.box b{display:block;font-size:.72rem;letter-spacing:.06em;margin-bottom:3px;font-family:var(--f-mono);text-transform:uppercase}
+.box.game b{color:var(--c4)} .box.tip b{color:var(--ok)}
+.check{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.92rem;font-weight:600;color:var(--muted)}
+.check input{width:20px;height:20px;accent-color:var(--ok)}
+.concept.done .check{color:var(--ok)}
+/* 문제 */
+.qcard{background:var(--surface);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:14px;box-shadow:0 1px 0 var(--line);position:relative}
+.qcard::before{content:"";position:absolute;left:0;top:18px;bottom:18px;width:4px;border-radius:0 4px 4px 0;background:var(--c,var(--accent))}
+.qtext{font-size:1.06rem;font-weight:600;line-height:1.55}
+pre.code{margin:0;background:var(--surface2);border-radius:10px;padding:12px;font-family:var(--f-mono);font-size:.86rem;overflow-x:auto;line-height:1.5}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{appearance:none;width:100%;text-align:left;font:inherit;color:var(--ink);background:var(--surface2);border:0;box-shadow:inset 0 0 0 1.5px transparent;border-radius:12px;padding:12px;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;cursor:pointer}
+.bub{width:28px;height:28px;border:2px solid var(--accent);color:var(--accent);border-radius:50%;display:grid;place-items:center;font-family:var(--f-mono);font-weight:600;font-size:.84rem;background:var(--surface)}
+.opt.sel{box-shadow:inset 0 0 0 1.5px var(--mark)}
+.opt.sel .bub{background:var(--mark);border-color:var(--mark);color:var(--mark-fg)}
+.opt.right{background:var(--ok-soft);box-shadow:inset 0 0 0 1.5px var(--ok)}
+.opt.right .bub{background:var(--ok);border-color:var(--ok);color:#fff}
+.opt.wrong{background:var(--bad-soft);box-shadow:inset 0 0 0 1.5px var(--bad)}
+.opt.wrong .bub{background:var(--bad);border-color:var(--bad);color:#fff}
+.opt:disabled{cursor:default}
+.explain{border-top:1.5px dashed var(--line);padding-top:12px}
+.verdict{font-family:var(--f-display);font-size:1.3rem}
+.verdict.ok{color:var(--ok)} .verdict.no{color:var(--bad)}
+.progress{height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--accent);border-radius:3px}
+.star{appearance:none;border:0;background:none;font:inherit;font-size:.82rem;font-weight:700;color:var(--muted);cursor:pointer;padding:6px 8px;border-radius:8px;display:inline-flex;gap:4px;align-items:center}
+.star[aria-pressed="true"]{color:var(--warn);background:var(--warn-soft)}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;font-weight:700;padding:3px 8px;border-radius:999px;background:color-mix(in srgb,var(--c,var(--accent)) 15%,transparent);color:var(--c,var(--accent))}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode{appearance:none;border:0;font:inherit;color:var(--ink);text-align:left;background:var(--surface);border-radius:14px;padding:14px;box-shadow:inset 0 0 0 1.5px var(--line);cursor:pointer;display:flex;flex-direction:column;gap:3px;min-width:0}
+.mode[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--accent);background:var(--accent-soft)}
+.mode b{font-size:.95rem} .mode span{font-size:.78rem;color:var(--muted)}
+/* 모의고사 */
+.timer{font-family:var(--f-mono);font-size:1.25rem;font-weight:600;background:var(--surface);padding:6px 12px;border-radius:10px}
+.timer.warn{color:var(--bad);background:var(--bad-soft)}
+.grid40{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.cell{appearance:none;border:1.5px solid var(--accent);background:var(--surface);color:var(--accent);border-radius:50%;aspect-ratio:1;max-width:100%;font-family:var(--f-mono);font-size:.66rem;font-weight:600;cursor:pointer;padding:0}
+.cell.ans{background:var(--mark);border-color:var(--mark);color:var(--mark-fg)}
+.cell.cur{outline:2px solid var(--ink);outline-offset:2px}
+.cell.flag{border-style:dashed;border-color:var(--warn);color:var(--warn)}
+.score{font-family:var(--f-display);font-size:3.6rem;line-height:1}
+.stamp{display:inline-block;border:3px solid currentColor;padding:2px 14px;border-radius:8px;font-family:var(--f-display);font-size:1.6rem;transform:rotate(-6deg)}
+.stamp.pass{color:var(--ok)} .stamp.fail{color:var(--bad)}
+.confirm{background:var(--bad-soft);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.empty{text-align:center;padding:32px 16px;border:2px dashed var(--line);border-radius:var(--r);align-items:center}
+/* 플래시카드 */
+.flip{appearance:none;border:0;padding:0;background:none;font:inherit;color:inherit;width:100%;perspective:1200px;cursor:pointer;display:block}
+.flip .inner{position:relative;min-height:260px;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.3,.7,.3,1)}
+.flip.on .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:22px;padding:22px;display:flex;flex-direction:column;justify-content:center;gap:10px;text-align:left}
+.face.front{background:var(--surface);box-shadow:0 1px 0 var(--line),inset 0 0 0 1.5px var(--line)}
+.face.back{background:var(--hero);color:var(--hero-fg);transform:rotateY(180deg)}
+.face .term{font-family:var(--f-display);font-size:2.1rem;line-height:1.15}
+.face .en{font-family:var(--f-mono);font-size:.85rem;color:var(--muted)}
+.face.back .en{color:var(--hero-muted)}
+.face .def{font-size:1.08rem;font-weight:500}
+.face .ex{font-size:.88rem;color:var(--hero-muted);border-top:1px dashed rgba(255,255,255,.2);padding-top:8px}
+.face .hint{position:absolute;bottom:14px;left:22px;font-size:.76rem;color:var(--muted)}
+.rate{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.rate .btn{flex-direction:column;gap:0;line-height:1.2;font-size:.92rem}
+.rate .btn small{font-weight:500;font-size:.7rem;opacity:.85}
+.btn.r0{background:var(--bad)} .btn.r1{background:var(--warn)} .btn.r2{background:var(--ok)}
+.boxes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.boxes div{background:var(--surface2);border-radius:12px;padding:10px;text-align:center}
+.boxes b{display:block;font-family:var(--f-display);font-size:1.5rem;font-weight:400}
+.search{width:100%;font:inherit;padding:12px 14px;border-radius:12px;border:0;box-shadow:inset 0 0 0 1.5px var(--line);background:var(--surface);color:var(--ink)}
+.tlist{display:flex;flex-direction:column;gap:8px}
+.titem{background:var(--surface);border-radius:12px;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:2px 10px;border-left:4px solid var(--c)}
+.titem .lv{grid-row:span 2;align-self:center;font-family:var(--f-mono);font-size:.7rem;color:var(--muted)}
+textarea{width:100%;min-height:90px;font-family:var(--f-mono);font-size:.78rem;padding:10px;border-radius:10px;border:0;box-shadow:inset 0 0 0 1.5px var(--line);background:var(--surface2);color:var(--ink);resize:vertical}
+details.more>summary{cursor:pointer;font-weight:700;list-style:none;padding:4px 0}
+details.more>summary::-webkit-details-marker{display:none}
+#toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);background:var(--mark);color:var(--mark-fg);padding:10px 16px;border-radius:999px;font-weight:600;font-size:.9rem;opacity:0;pointer-events:none;z-index:20;max-width:calc(100% - 32px);text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (max-width:380px){.grid40{grid-template-columns:repeat(8,1fr)}.hero{grid-template-columns:1fr}.hero .dd{font-size:2rem}}
+@media (prefers-reduced-motion:no-preference){.opt,.chip,.mode,.tile{transition:background-color .15s,box-shadow .15s}#toast{transition:opacity .2s,transform .2s}.goalbar i,.track i{transition:width .5s}}
+@media (prefers-reduced-motion:reduce){.flip .inner{transition:none}}
+</style><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+
+
+<div class="wrap" id="view" aria-live="polite"></div>
+<div id="toast" role="status"></div>
+
+<nav class="tabs" aria-label="메뉴">
+  <button class="tab" data-v="home"><span class="ic">H</span>홈</button>
+  <button class="tab" data-v="learn"><span class="ic">개</span>개념</button>
+  <button class="tab" data-v="terms"><span class="ic">Aa</span>용어</button>
+  <button class="tab" data-v="practice"><span class="ic">Q</span>문제</button>
+  <button class="tab" data-v="mock"><span class="ic">40</span>모의고사</button>
+</nav>
+
+<script>
+const CH=[
+{n:1,t:"테스팅의 기초",q:8,c:[
+{id:"1-1",term:"테스팅이란?",easy:"소프트웨어를 직접 실행해 보거나, 문서·코드를 읽어 보면서 품질을 평가하고 결함을 찾는 모든 활동입니다.\n실행하는 것(동적 테스팅)뿐 아니라 읽고 검토하는 것(정적 테스팅)도 테스팅에 들어갑니다.",game:"맞고 게임을 직접 쳐보는 것도 테스팅이고, 기획서를 읽다가 '이 점수 규칙 이상한데?' 하고 찾는 것도 테스팅입니다.",tip:"'테스팅 = 실행만'이라는 보기는 틀린 보기입니다."},
+{id:"1-2",term:"테스팅의 목적",easy:"• 결함 찾기\n• 품질 수준에 대한 정보 주기\n• 위험(나쁜 일이 생길 가능성) 줄이기\n• 요구사항대로 만들었는지 확인하기\n• 계약·법 기준을 지키는지 확인하기\n• 이해관계자에게 믿음 주기",game:"출시 전 '이번 빌드는 결제 쪽 위험이 높다'고 보고하는 것도 테스팅의 목적(정보 제공)에 해당합니다.",tip:"'결함을 직접 고치는 것'은 테스팅의 목적이 아닙니다. 그건 디버깅입니다."},
+{id:"1-3",term:"테스팅 vs 디버깅",easy:"테스팅: 장애를 일으키거나 결함을 찾아내는 일.\n디버깅: 장애의 원인을 찾아내고 분석해서 고치는 일 (주로 개발자).",game:"QA가 '피박 계산이 틀려요' 이슈 등록 → 테스팅.\n개발자가 원인 코드를 찾아 수정 → 디버깅.\nQA가 수정됐는지 다시 확인 → 다시 테스팅(확인 테스트).",tip:"순서 문제가 나오면: 테스팅 → 디버깅 → 확인 테스팅."},
+{id:"1-4",term:"오류 → 결함 → 장애",easy:"오류(error, 실수): 사람이 저지른 실수.\n결함(defect, 버그): 그 실수 때문에 코드나 문서에 남은 흠.\n장애(failure): 결함이 있는 부분이 실행돼서 실제로 잘못된 결과가 나온 것.\n근본 원인(root cause): 실수가 생긴 진짜 이유 (예: 시간 압박, 요구사항이 애매함).",game:"기획자가 '광박' 규칙을 잘못 이해함(오류) → 점수 계산식이 틀림(결함) → 실제 판에서 점수가 틀리게 나옴(장애).",tip:"결함이 있어도 그 코드가 실행되지 않으면 장애는 생기지 않습니다. 또 방사선·전자기장 같은 환경 때문에 장애가 생기기도 합니다."},
+{id:"1-5",term:"QA(품질 보증) vs 테스팅",easy:"QA: 일하는 방식(프로세스)을 좋게 만들어 문제를 '예방'하는 활동.\n테스팅: 만들어진 제품을 검사해서 문제를 '찾아 고치게' 하는 활동. 품질 통제(QC)의 한 형태입니다.",game:"'버그 등록 양식과 검수 절차를 팀 표준으로 만든다' → QA.\n'오늘 빌드를 받아서 검증한다' → 테스팅.",tip:"QA = 프로세스 중심·예방 / 테스팅 = 제품 중심·교정. 이 짝을 외우세요."},
+{id:"1-6",term:"테스팅 7원칙",easy:"① 테스팅은 결함이 '있다'는 걸 보여줄 뿐, '없다'는 걸 증명하진 못한다.\n② 완벽한(모든 경우) 테스팅은 불가능하다.\n③ 일찍 테스트할수록 시간과 돈을 아낀다.\n④ 결함은 몇몇 곳에 몰려 있다(결함 집중).\n⑤ 같은 테스트만 반복하면 효과가 떨어진다(살충제 역설).\n⑥ 테스팅은 상황(정황)에 따라 다르다.\n⑦ 결함이 없어도 사용자가 원하는 게 아니면 실패다(오류 부재의 궤변).",game:"버그 대부분이 '정산·결제' 모듈에서만 나온다 → ④ 결함 집중.\n몇 달 같은 회귀 TC만 돌렸더니 새 버그가 안 나온다 → ⑤ 테스트를 새로 고쳐야 함.",tip:"상황을 주고 '어느 원칙인가?'를 묻는 문제가 매우 자주 나옵니다."},
+{id:"1-7",term:"테스트 활동 7가지",easy:"1. 계획: 목표와 방법 정하기\n2. 모니터링과 제어: 계획대로 가는지 보고, 아니면 조정하기\n3. 분석: '무엇을' 테스트할지 (테스트 조건)\n4. 설계: '어떻게' 테스트할지 (테스트 케이스, 데이터)\n5. 구현: 실행 준비물 만들기 (테스트 절차, 스위트, 환경)\n6. 실행: 돌리고 결과 비교, 결함 보고\n7. 완료: 마무리 보고서, 테스트웨어 보관, 회고",game:"'이번 업데이트에서 새 이벤트 보상 지급을 확인해야 한다' → 분석.\n'보상 지급 조건별 TC 5개 작성' → 설계.",tip:"분석 = 무엇을(What), 설계 = 어떻게(How). 시험 단골입니다."},
+{id:"1-8",term:"테스트웨어와 추적성",easy:"테스트웨어: 테스트하면서 만든 모든 산출물 (계획서, 테스트 케이스, 데이터, 스크립트, 보고서 등).\n추적성: 요구사항 ↔ 테스트 케이스 ↔ 실행 결과 ↔ 결함을 서로 연결해 두는 것.\n추적성 덕분에 커버리지(얼마나 확인했는지)를 평가하고, 요구사항이 바뀌었을 때 어떤 테스트를 다시 해야 하는지 알 수 있습니다.",game:"'기획서 3번 항목이 바뀌었는데 어떤 TC를 다시 돌려야 하지?'에 바로 답할 수 있게 해주는 게 추적성입니다.",tip:"추적성의 이점: 커버리지 평가, 변경 영향 분석, 감사 대응, 보고서 이해도 향상."},
+{id:"1-9",term:"역할·전체 팀 접근법·독립성",easy:"테스트 관리 역할: 계획, 모니터링·제어, 완료를 책임짐.\n테스팅 역할: 분석, 설계, 구현, 실행을 담당.\n전체 팀 접근법: 품질은 테스터만이 아니라 팀 모두의 책임.\n독립성: 만든 사람과 다른 사람이 테스트할수록 다른 관점으로 결함을 찾기 쉬움.",game:"개발자 셀프 테스트보다 QA팀이 볼 때 새로운 버그가 더 잘 보이는 것 = 독립성의 장점.",tip:"독립성의 단점: 개발팀과 고립됨, 소통 문제, 개발자가 '품질은 QA가 알아서'라고 생각하게 됨, QA가 병목으로 여겨짐."}
+]},
+{n:2,t:"SDLC와 테스팅",q:6,c:[
+{id:"2-1",term:"개발 과정 전반의 좋은 테스트 습관",easy:"SDLC는 '소프트웨어를 기획부터 출시·유지보수까지 만드는 전체 과정'이라는 뜻입니다.\n어떤 개발 방식이든 공통으로 좋은 습관:\n• 개발 활동마다 짝이 되는 테스트 활동이 있다\n• 테스트 레벨마다 목표가 다르다\n• 테스트 분석·설계는 해당 개발 단계가 시작될 때 함께 시작한다\n• 테스터는 문서 초안이 나오자마자 리뷰에 참여한다",game:"기획서 초안이 나왔을 때부터 QA가 리뷰에 들어가는 것.",tip:"'테스트는 코딩이 끝난 뒤에 시작한다'는 틀린 보기."},
+{id:"2-2",term:"테스트 먼저 하는 개발: TDD·ATDD·BDD",easy:"TDD: 테스트를 먼저 짜고, 그 테스트를 통과하도록 코드를 작성하고, 코드를 다듬는다(리팩터링). 주로 개발자, 작은 단위.\nATDD: 고객·개발·테스터가 함께 정한 '인수 조건'에서 테스트를 먼저 만든다.\nBDD: 'Given(이런 상황에서) / When(이걸 하면) / Then(이렇게 된다)' 같은 쉬운 문장으로 원하는 동작을 적고, 그걸 테스트로 쓴다.",game:"Given 판돈이 0원인 유저가 / When 게임방에 입장하면 / Then '충전하세요' 안내가 뜬다 → BDD 형식.",tip:"Given/When/Then이 보이면 BDD."},
+{id:"2-3",term:"DevOps·시프트 레프트·회고",easy:"DevOps: 개발팀과 운영팀이 함께 일하며, 자동으로 빌드·테스트·배포(CI/CD)하는 방식. 빠른 피드백이 장점, 자동화 환경 구축 비용이 단점.\n시프트 레프트: 테스트를 더 '앞쪽(일찍)'으로 당기는 것. 예: 요구사항 리뷰, 코드 올리기 전 정적 분석, 코딩 전 테스트 작성.\n회고: 일이 끝난 뒤 '잘된 점·아쉬운 점·개선할 점'을 팀이 같이 돌아보는 것.",game:"빌드가 올라오면 자동으로 기본 플레이 테스트가 돌아가는 파이프라인 = CI/CD.",tip:"시프트 레프트는 '테스트를 줄인다'가 아니라 '일찍 한다'."},
+{id:"2-4",term:"테스트 레벨 5가지",easy:"1. 컴포넌트(단위) 테스트: 함수·모듈 하나씩 따로. 주로 개발자.\n2. 컴포넌트 통합 테스트: 모듈끼리 잘 연결되는지.\n3. 시스템 테스트: 완성된 전체 시스템이 기능·비기능 모두 잘 되는지. 주로 독립 테스트팀.\n4. 시스템 통합 테스트: 우리 시스템과 외부 시스템(결제사, 플랫폼 등) 연결.\n5. 인수 테스트: 사용자·고객이 '출시해도 되겠다'를 확인. (사용자 인수, 운영 인수, 계약·규제 인수, 알파, 베타)",game:"구글 결제 연동 확인 → 시스템 통합 테스트.\n사내 직원 대상 사전 플레이 → 알파 테스트, 일부 유저 대상 CBT → 베타 테스트.",tip:"외부 시스템과의 연결 = 시스템 통합. 모듈끼리 = 컴포넌트 통합."},
+{id:"2-5",term:"테스트 유형 4가지",easy:"기능 테스트: '무엇을' 하는지 (기능이 맞게 동작하나).\n비기능 테스트: '얼마나 잘' 하는지 (성능, 사용성, 보안, 호환성, 신뢰성, 유지보수성, 이식성 등).\n블랙박스 테스트: 내부 코드는 안 보고 명세(설명서) 기준으로.\n화이트박스 테스트: 내부 코드 구조를 보고.",game:"'동시 접속 1만 명에서도 2초 안에 방 입장' → 비기능(성능).\n'고도리 점수가 5점' → 기능.",tip:"모든 유형은 모든 레벨에서 할 수 있습니다."},
+{id:"2-6",term:"확인 테스팅 vs 회귀 테스팅",easy:"확인 테스팅(재테스트): 고친 결함이 '진짜 고쳐졌는지' 확인.\n회귀 테스팅: 고친 것 때문에 '다른 멀쩡하던 기능이 망가지지 않았는지' 확인.\n회귀 테스트는 자주 반복되므로 자동화하기 좋은 후보입니다.",game:"'피박 계산 버그 수정' 후 피박 상황 다시 확인 → 확인 테스팅.\n같은 빌드에서 광박·고 점수도 여전히 맞는지 → 회귀 테스팅.",tip:"영향도 분석으로 회귀 테스트 범위를 정합니다."},
+{id:"2-7",term:"유지보수 테스팅",easy:"이미 운영 중인 시스템을 바꿀 때 하는 테스트입니다.\n언제 하나요(트리거):\n• 수정: 버그 패치, 기능 개선\n• 업그레이드·마이그레이션: 다른 서버·플랫폼으로 옮기기\n• 은퇴: 서비스 종료 시 데이터 보관·복구 확인\n영향도 분석: 바꾸면 어디까지 영향이 가는지 미리 파악.",game:"서버를 새 클라우드로 이전 → 마이그레이션 → 유지보수 테스팅.",tip:"'신규 프로젝트 시작'은 유지보수 테스팅 트리거가 아닙니다."}
+]},
+{n:3,t:"정적 테스팅",q:4,c:[
+{id:"3-1",term:"정적 테스팅 vs 동적 테스팅",easy:"정적 테스팅: 프로그램을 실행하지 않고 문서·코드를 읽어서 검사 (리뷰, 정적 분석 도구).\n동적 테스팅: 프로그램을 실제로 실행해서 검사.\n둘은 서로 보완 관계입니다.",game:"기획서 리뷰 회의 → 정적. 빌드 설치 후 플레이 → 동적.",tip:"정적 테스팅은 결함 '자체'를 찾고, 동적 테스팅은 '장애'를 일으켜서 찾습니다."},
+{id:"3-2",term:"정적 테스팅의 장점",easy:"• 결함을 일찍 찾아 고치는 비용이 싸다\n• 실행으로는 찾기 어려운 결함을 찾는다: 도달할 수 없는 코드, 코딩 표준 위반, 애매하거나 빠진 요구사항, 보안 취약점, 유지보수 어려운 구조\n• 이해관계자끼리 이해를 맞출 수 있다",game:"기획서에서 '연결 끊김 시 판돈 처리 규칙이 없음'을 미리 찾는 것.",tip:"'정적 테스팅으로 응답 속도를 측정한다'는 틀린 보기."},
+{id:"3-3",term:"리뷰 프로세스 5단계",easy:"1. 계획: 범위, 목표, 참여자, 종료 조건 정하기\n2. 리뷰 착수: 자료 배포, 역할 설명\n3. 개별 리뷰: 각자 읽고 이슈 찾기\n4. 이슈 소통 및 분석: 모여서 이슈 논의, 결정\n5. 수정 및 보고: 작성자가 고치고 결과 보고",game:"기획서 리뷰 일정 공지 → 문서 공유 → 각자 코멘트 → 리뷰 미팅 → 기획자 반영.",tip:"순서 문제가 나옵니다. '계획-착수-개별-소통-수정'."},
+{id:"3-4",term:"리뷰 역할",easy:"관리자: 무엇을 리뷰할지 정하고 자원 제공.\n작성자: 리뷰 대상을 만들고 고치는 사람.\n중재자(퍼실리테이터): 리뷰 회의를 효과적으로 진행.\n서기: 이슈와 결정사항 기록.\n리뷰어: 실제로 검토하는 사람.\n리뷰 리더: 리뷰 전체를 책임지고 조직.",game:"리뷰 미팅에서 시간 관리하고 발언 정리하는 사람 = 중재자.",tip:"한 사람이 여러 역할을 맡을 수도 있습니다."},
+{id:"3-5",term:"리뷰 유형 4가지",easy:"비공식 리뷰: 정해진 절차 없음. 동료에게 '한번 봐줘'.\n워크스루: 작성자가 주도. 교육, 합의, 아이디어 얻기 목적.\n기술 리뷰: 기술 전문가들이 기술적 결정을 함께 내림.\n인스펙션: 가장 공식적. 정해진 절차, 지표(통계) 수집. 작성자는 리뷰 리더나 서기를 맡을 수 없음.",game:"기획자가 직접 신규 이벤트 기획서를 설명하며 의견 받기 → 워크스루.",tip:"'가장 공식적', '지표 수집' → 인스펙션."},
+{id:"3-6",term:"리뷰 성공 요인",easy:"• 명확한 목표와 측정 가능한 종료 조건\n• 리뷰 대상을 작은 단위로 나누기\n• 충분한 준비 시간\n• 경영진 지원\n• 리뷰를 조직 문화로 만들기\n• 참여자 교육\n• 회의 진행 잘하기",game:"200페이지 기획서를 한 번에 리뷰하지 않고 기능별로 나누는 것.",tip:"'리뷰 결과를 작성자 개인 평가에 사용'은 실패 요인입니다."}
+]},
+{n:4,t:"테스트 분석과 설계",q:11,c:[
+{id:"4-1",term:"테스트 기법 3가지 분류",easy:"블랙박스 기법: 명세(설명서) 기반. 동등 분할, 경계값 분석, 결정 테이블, 상태 전이.\n화이트박스 기법: 코드 구조 기반. 구문 테스팅, 분기 테스팅.\n경험 기반 기법: 테스터 경험 기반. 오류 추정, 탐색적 테스팅, 체크리스트 기반.\n(+ 협업 기반 접근법: 사용자 스토리, 인수 조건, ATDD)",game:"QA 경험으로 '여기 터질 것 같은데' 찔러보기 → 경험 기반.",tip:"4장이 11문제로 가장 많이 나옵니다. 계산 문제가 여기서 나와요."},
+{id:"4-2",term:"동등 분할 (EP)",easy:"입력값을 '똑같이 처리되는 묶음(파티션)'으로 나누고, 묶음마다 대표값 하나씩만 테스트하는 방법입니다.\n유효 파티션(정상 처리)과 비유효 파티션(거부되어야 함)으로 나눕니다.\n커버리지 = 테스트한 파티션 수 ÷ 전체 파티션 수.",game:"닉네임 길이 2~8자 허용이면:\n1자 이하(비유효) / 2~8자(유효) / 9자 이상(비유효) → 파티션 3개 → 최소 테스트 3개.",tip:"범위가 하나면 보통 파티션 3개 (아래 무효 / 유효 / 위 무효)."},
+{id:"4-3",term:"경계값 분석 (BVA)",easy:"결함은 경계에서 잘 생기므로, 파티션의 '끝' 값을 테스트합니다.\n2값 경계값: 경계값 + 바로 바깥 이웃 1개.\n3값 경계값: 경계값 + 양쪽 이웃 2개.",game:"닉네임 2~8자:\n2값 → 1, 2, 8, 9 (4개)\n3값 → 1, 2, 3, 7, 8, 9 (6개)",tip:"범위 하나에 2값이면 4개, 3값이면 6개. 계산 문제 단골."},
+{id:"4-4",term:"결정 테이블",easy:"여러 조건의 조합에 따라 결과가 달라질 때 쓰는 표입니다.\n조건이 참/거짓 두 가지씩이고 n개면 전체 조합(열) 수는 2의 n제곱입니다.\n불가능하거나 결과가 같은 조합은 합쳐서 줄일 수 있습니다.",game:"조건: VIP 회원인가? / 이벤트 기간인가? / 첫 결제인가? → 3개 → 2×2×2 = 8가지 조합.",tip:"조건 3개 → 8열, 4개 → 16열."},
+{id:"4-5",term:"상태 전이 테스팅",easy:"시스템이 '상태'를 가지고 이벤트에 따라 상태가 바뀔 때 씁니다.\n모든 상태 커버리지: 모든 상태를 한 번씩 방문.\n유효 전이 커버리지(0-스위치): 모든 유효한 상태 변화를 한 번씩 실행.\n모든 전이 커버리지: 유효 전이 + 비유효 전이 시도까지 모두.",game:"로그아웃 →(로그인)→ 로비 →(방 입장)→ 게임 중 →(판 종료)→ 로비.\n이 한 흐름으로 상태 3개를 모두 방문 → 모든 상태 커버리지 달성.",tip:"유효 전이 커버리지 100%를 달성하면 모든 상태 커버리지도 100% 달성됩니다."},
+{id:"4-6",term:"구문 테스팅과 분기 테스팅",easy:"구문(statement) 커버리지: 실행된 코드 줄 수 ÷ 전체 실행 가능한 코드 줄 수.\n분기(branch) 커버리지: 실행된 갈림길 수 ÷ 전체 갈림길 수. IF문은 '참' 길과 '거짓' 길 두 개.\n분기 100%면 구문 100%도 보장. 반대는 보장 안 됨.",game:"IF 판돈 > 0 THEN 게임 시작 (ELSE 없음)\n구문 100% → 판돈 > 0 하나면 됨 (1개)\n분기 100% → 판돈 > 0, 판돈 = 0 둘 다 필요 (2개)",tip:"'구문 100%면 분기 100%' → 틀린 보기!"},
+{id:"4-7",term:"경험 기반: 오류 추정·탐색적·체크리스트",easy:"오류 추정: 과거 결함, 개발자가 흔히 하는 실수를 바탕으로 결함을 예상해 테스트. (결함 공격: 예상 결함 목록을 만들어 하나씩 공격)\n탐색적 테스팅: 테스트를 설계·실행·평가를 동시에. '테스트 차터(목표 메모)'와 정해진 시간으로 하는 세션 기반이 많음. 명세가 부족하거나 시간이 없을 때 효과적.\n체크리스트 기반: 경험·지식으로 만든 확인 목록으로 테스트. 주기적으로 업데이트해야 함.",game:"'60분 동안 결제 화면에서 네트워크 끊김 위주로 탐색' → 테스트 차터를 가진 세션 기반 탐색적 테스팅.",tip:"경험 기반 기법은 테스터 실력에 따라 결과가 크게 달라집니다."},
+{id:"4-8",term:"협업 기반: 사용자 스토리·인수 조건·ATDD",easy:"사용자 스토리 3C: Card(카드에 적은 짧은 설명), Conversation(대화로 구체화), Confirmation(인수 조건으로 확인).\n좋은 스토리 INVEST: 독립적, 협상 가능, 가치 있음, 추정 가능, 작음, 테스트 가능(Testable).\n인수 조건 작성 형식: 시나리오형(Given/When/Then), 규칙형(체크리스트, 입출력 표).\nATDD: 인수 조건에서 테스트를 먼저 만들고, 긍정 테스트부터 작성.",game:"'유저로서 / 친구에게 판돈을 선물하고 싶다 / 그래야 같이 놀 수 있으니까' → 사용자 스토리.",tip:"3C의 세 번째 C는 Confirmation(확인)."}
+]},
+{n:5,t:"테스트 활동 관리",q:9,c:[
+{id:"5-1",term:"테스트 계획서",easy:"테스트의 목표, 범위, 접근법, 일정, 예산, 자원, 위험, 시작·종료 조건, 의사소통 방법 등을 적는 문서입니다.\n애자일에서는 테스터가 릴리스 계획(제품 전체 출시 단위)과 이터레이션 계획(1~4주 짧은 주기)에 참여합니다.",game:"분기 업데이트 QA 계획서에 '검증 범위, QA 기간, 투입 인원, 출시 기준'을 적는 것.",tip:"'결함 하나하나의 상세 재현 절차'는 계획서가 아니라 결함 보고서 내용."},
+{id:"5-2",term:"시작 조건과 종료 조건",easy:"시작 조건(Entry): 테스트를 시작하기 위한 전제. 예: 테스트 환경 준비, 테스트 가능한 요구사항, 도구 준비.\n종료 조건(Exit): 테스트를 끝내도 되는 기준. 예: 커버리지 목표 달성, 미해결 결함 수 기준 충족, 계획된 테스트 실행 완료.\n애자일에서는 종료 조건 = 완료 정의(DoD), 시작 조건 = 준비 정의(DoR).",game:"'치명 버그 0건, 주요 버그 3건 이하면 출시 가능' → 종료 조건.",tip:"DoD = 끝 (Done), DoR = 시작 (Ready)."},
+{id:"5-3",term:"테스트 노력 추정 4가지",easy:"비율 기반: 과거 비율 이용 (예: 개발 대비 테스트 노력 비율).\n외삽: 지금까지 진행된 데이터로 앞으로를 예측.\n와이드밴드 델파이: 전문가들이 각자 추정 → 차이 논의 → 다시 추정 (플래닝 포커가 이 방식).\n3점 추정: 낙관(a), 가장 가능성 높음(m), 비관(b)\n  추정치 E = (a + 4m + b) ÷ 6\n  표준편차 = (b − a) ÷ 6",game:"낙관 6일, 보통 9일, 비관 18일 → (6 + 36 + 18) ÷ 6 = 10일.",tip:"3점 추정 공식은 무조건 외우세요. 계산 문제 나옵니다."},
+{id:"5-4",term:"테스트 케이스 우선순위",easy:"위험 기반: 위험이 높은 것부터.\n커버리지 기반: 커버리지를 가장 많이 올리는 것부터.\n요구사항 기반: 이해관계자가 정한 요구사항 우선순위대로.\n단, 의존 관계(먼저 해야 하는 TC)가 있으면 그 순서를 지켜야 합니다.",game:"'결제·정산'을 '설정 화면 문구'보다 먼저 테스트 → 위험 기반.",tip:""},
+{id:"5-5",term:"테스트 피라미드와 테스팅 사분면",easy:"테스트 피라미드: 아래층일수록 작고 빠르고 많은 테스트(단위 테스트), 위로 갈수록 크고 느리고 적은 테스트(UI·전체 흐름).\n테스팅 사분면 (애자일):\nQ1 기술 관점·팀 지원: 컴포넌트, 컴포넌트 통합 테스트 (자동화)\nQ2 비즈니스 관점·팀 지원: 기능 테스트, 사용자 스토리 테스트, 예시\nQ3 비즈니스 관점·제품 비평: 탐색적, 사용성, 사용자 인수 테스트\nQ4 기술 관점·제품 비평: 스모크, 비기능 테스트(사용성 제외)",game:"새 UI 사용성 체험 테스트 → Q3.",tip:"탐색적·사용성 → Q3, 성능·보안 → Q4."},
+{id:"5-6",term:"위험 관리",easy:"위험 수준 = 발생 가능성 × 영향.\n프로젝트 위험: 프로젝트 진행에 대한 위험 (일정 지연, 인력 부족, 환경 지연).\n제품 위험: 제품 품질에 대한 위험 (기능 오류, 보안 취약점, 성능 저하).\n위험 분석 = 식별 + 평가. 위험 통제 = 완화 + 모니터링.\n대응: 테스트로 완화, 수용, 전가(보험·외주 등 남에게 넘김), 비상 계획.",game:"'결제 금액 오류로 유저 손해' → 제품 위험.\n'QA 인원 2명 퇴사' → 프로젝트 위험.",tip:"사람·일정·환경 = 프로젝트 위험, 제품 결함 = 제품 위험."},
+{id:"5-7",term:"모니터링·제어와 보고서",easy:"모니터링: 진행 상황을 데이터로 지켜봄 (지표: 실행률, 통과율, 결함 수, 커버리지 등).\n제어: 계획과 어긋나면 조정 (우선순위 변경, 일정 조정, 환경 재확인).\n테스트 진행 보고서: 테스트 기간 중 정기적으로.\n테스트 완료 보고서: 테스트(레벨·이터레이션·프로젝트)가 끝날 때.",game:"매일 오후 QA 진행률 공유 → 진행 보고서.\n업데이트 출시 후 최종 QA 결과서 → 완료 보고서.",tip:""},
+{id:"5-8",term:"형상 관리",easy:"테스트 대상(빌드)과 테스트웨어의 '버전'을 구분하고 추적하는 것입니다.\n어떤 빌드에 어떤 TC 버전으로 테스트했는지 알 수 있어야 결과를 재현할 수 있습니다.",game:"'1.2.3 빌드에서 재현됨, 1.2.4에서 수정 확인'처럼 빌드 번호를 기록하는 것.",tip:""},
+{id:"5-9",term:"결함 관리와 결함 보고서",easy:"결함 보고서에 들어가는 것:\n• 고유 ID, 제목, 날짜, 작성자\n• 테스트 대상과 환경(빌드, 기기)\n• 재현 단계\n• 기대 결과와 실제 결과\n• 심각도, 우선순위\n• 상태 (열림, 수정됨, 종료 등)\n• 로그·스크린샷 등 증거\n목적: 개발자가 재현·수정할 수 있게 충분한 정보 제공, 품질 추적, 프로세스 개선 근거.",game:"팀장님이 매일 쓰시는 그 버그 리포트입니다.",tip:"'결함을 만든 개발자 처벌 기록'은 보고서 목적이 아닙니다."}
+]},
+{n:6,t:"테스트 도구",q:2,c:[
+{id:"6-1",term:"테스트 도구 종류",easy:"관리 도구: 요구사항, 테스트, 결함, 형상 관리 (예: 지라 같은 이슈 관리).\n정적 테스팅 도구: 코드를 실행하지 않고 검사 (정적 분석).\n테스트 설계·구현 도구: 테스트 케이스·데이터 생성.\n테스트 실행·커버리지 도구: 자동 실행, 커버리지 측정.\n비기능 테스트 도구: 성능·부하 등 사람이 하기 어려운 테스트.\nDevOps 도구: 자동 빌드·배포 파이프라인.\n협업 도구: 소통.\n확장성·배포 표준화 도구: 가상 머신, 컨테이너.",game:"버그 트래커 = 관리 도구. 부하 테스트 도구 = 비기능 도구.",tip:"6장은 2문제뿐. 가볍게."},
+{id:"6-2",term:"자동화의 이점과 위험",easy:"이점: 반복 작업 시간 절약, 사람 실수 감소·일관성, 객관적인 측정, 빠른 피드백, 사람이 못하는 테스트(대량 부하) 가능.\n위험: 비현실적인 기대, 도입·유지 노력 과소평가, 도구에 지나친 의존(사람 판단 무시), 벤더 의존(회사 폐업 등), 오픈소스 지원 중단, 기존 플랫폼과 안 맞음.",game:"'자동화 도구만 사면 QA 인원이 필요 없다' → 비현실적 기대 (위험).",tip:""}
+]}
+];
+
+const Q=[
+/* 1장 */
+{id:"q101",ch:1,q:"다음 중 테스팅의 목적으로 보기 어려운 것은?",o:["결함을 찾아낸다","테스트 대상의 품질 수준에 대한 정보를 제공한다","발견된 결함의 원인이 된 코드를 직접 수정한다","제품이 출시된 후 생길 위험 수준을 낮춘다"],a:2,e:"결함 원인을 찾아 코드를 고치는 것은 디버깅으로, 주로 개발자가 합니다. 나머지는 모두 테스팅의 목적입니다."},
+{id:"q102",ch:1,q:"개발자가 조건문을 잘못 이해했다(①). 그 결과 코드에 잘못된 조건이 들어갔다(②). 게임 중 점수가 틀리게 표시되었다(③). ①②③을 순서대로 바르게 부른 것은?",o:["오류 - 결함 - 장애","결함 - 오류 - 장애","장애 - 결함 - 오류","오류 - 장애 - 결함"],a:0,e:"사람의 실수 = 오류, 코드에 남은 흠 = 결함, 실행 시 잘못된 결과 = 장애입니다."},
+{id:"q103",ch:1,q:"'모든 입력값과 조합을 다 테스트할 수는 없으므로, 위험과 우선순위에 따라 집중해야 한다'는 내용과 가장 관련 있는 원칙은?",o:["완벽한 테스팅은 불가능하다","결함은 집중된다","조기 테스팅으로 비용을 아낀다","오류 부재의 궤변"],a:0,e:"아주 단순한 경우를 빼면 모든 경우를 다 테스트할 수 없습니다. 그래서 테스트 기법과 우선순위가 필요합니다."},
+{id:"q104",ch:1,q:"한 QA팀이 같은 회귀 테스트 세트를 6개월째 그대로 돌리고 있다. 처음엔 결함이 많이 나왔지만 최근엔 거의 새 결함을 찾지 못한다. 어떤 원칙에 해당하는가?",o:["결함 집중","테스트는 효과가 떨어진다(살충제 역설)","테스팅은 정황에 의존한다","테스팅은 결함의 존재를 보여준다"],a:1,e:"같은 테스트를 반복하면 새 결함을 찾는 효과가 점점 떨어집니다. 테스트와 데이터를 주기적으로 바꿔야 합니다. 단, 회귀 테스트처럼 '같은 결과'를 확인하는 목적에서는 반복이 이로울 수도 있습니다."},
+{id:"q105",ch:1,q:"지난 3번의 업데이트에서 발견된 결함의 80%가 정산 모듈과 결제 모듈에서 나왔다. 이 현상을 설명하는 원칙은?",o:["조기 테스팅","결함 집중","완벽한 테스팅은 불가능","오류 부재의 궤변"],a:1,e:"적은 수의 모듈에 결함 대부분이 몰리는 현상을 결함 집중(결함 군집)이라고 합니다. 위험 기반 테스팅의 근거가 됩니다."},
+{id:"q106",ch:1,q:"QA에서 결함을 거의 찾지 못해 '품질이 좋다'고 보고했지만, 출시 후 사용자들이 '원하던 기능이 아니다'라며 외면했다. 어떤 원칙과 관련 있는가?",o:["테스팅은 결함이 없음을 증명할 수 없다","결함 집중","오류 부재의 궤변","테스트는 효과가 떨어진다"],a:2,e:"결함을 다 없애도 시스템이 사용자 요구를 충족하지 못하면 성공할 수 없습니다. 이것이 오류 부재의 궤변입니다. 검증(verification)만이 아니라 확인(validation)도 필요합니다."},
+{id:"q107",ch:1,q:"테스트 베이시스(기획서 등)를 분석해서 '무엇을 테스트할지(테스트 조건)'를 정하고 우선순위를 매기는 활동은?",o:["테스트 계획","테스트 분석","테스트 설계","테스트 구현"],a:1,e:"테스트 분석 = 무엇을(What) 테스트할지 정하는 활동입니다. 테스트 설계는 그것을 어떻게(How) 테스트할지 케이스로 만드는 활동입니다."},
+{id:"q108",ch:1,q:"테스트 조건을 바탕으로 테스트 케이스를 만들고, 필요한 테스트 데이터와 테스트 환경 요구사항을 정하는 활동은?",o:["테스트 분석","테스트 설계","테스트 실행","테스트 완료"],a:1,e:"테스트 설계 단계에서 테스트 조건을 구체적인 테스트 케이스로 바꾸고, 필요한 데이터와 환경을 정의합니다."},
+{id:"q109",ch:1,q:"다음 중 '테스트 완료' 활동에 해당하는 것은?",o:["테스트 스위트를 실행하고 결과를 기록한다","해결되지 않은 결함에 대해 변경 요청을 만들고, 테스트웨어를 보관하고, 완료 보고서를 쓴다","요구사항을 분석해 테스트 조건을 도출한다","테스트 데이터를 준비하고 환경을 구축한다"],a:1,e:"테스트 완료에서는 마무리 작업(미해결 결함 처리, 재사용할 테스트웨어 보관, 환경 정리, 교훈 정리, 완료 보고서)을 합니다."},
+{id:"q110",ch:1,q:"테스트 베이시스와 테스트 케이스, 테스트 결과, 결함 사이에 추적성을 유지할 때의 이점으로 가장 알맞은 것은?",o:["코드 실행 속도가 빨라진다","커버리지를 평가하고, 변경이 생겼을 때 영향받는 테스트를 파악할 수 있다","결함이 0개임을 보장할 수 있다","개발자 없이도 결함을 수정할 수 있다"],a:1,e:"추적성 덕분에 요구사항이 얼마나 테스트됐는지(커버리지) 평가하고, 요구사항 변경 시 다시 해야 할 테스트를 찾을 수 있습니다."},
+{id:"q111",ch:1,q:"품질 보증(QA)과 테스팅의 관계를 바르게 설명한 것은?",o:["QA는 프로세스 중심의 예방 활동이고, 테스팅은 제품 중심의 교정 활동(품질 통제의 한 형태)이다","QA와 테스팅은 완전히 같은 말이다","QA는 제품을 실행해 결함을 찾는 활동이다","테스팅은 조직의 개발 프로세스를 개선하는 활동이다"],a:0,e:"QA는 좋은 프로세스로 품질 문제를 예방하는 데 초점을 둡니다. 테스팅은 제품을 검사하는 품질 통제(QC) 활동입니다."},
+{id:"q112",ch:1,q:"테스팅의 독립성이 높을 때 생길 수 있는 '단점'은?",o:["작성자와 다른 관점으로 새로운 결함을 찾는다","작성자의 가정을 검증할 수 있다","테스터가 개발팀과 고립되어 소통이 어려워지고, 개발자가 품질 책임감을 덜 느낄 수 있다","작성자의 편향(인지적 편향)을 줄일 수 있다"],a:2,e:"독립성의 장점은 다른 관점과 편향 감소입니다. 단점은 고립, 소통 문제, 개발자의 책임감 저하, 테스터가 병목으로 여겨지는 것입니다."},
+/* 2장 */
+{id:"q201",ch:2,q:"어떤 개발 방식(SDLC)이든 공통으로 적용되는 좋은 테스팅 관행은?",o:["모든 개발 활동마다 그에 대응하는 테스트 활동이 있다","테스트는 코딩이 모두 끝난 뒤 시작한다","테스터는 최종 확정된 문서만 리뷰한다","모든 테스트 레벨의 목표는 동일하다"],a:0,e:"개발 활동마다 짝이 되는 테스트 활동이 있어야 하고, 테스터는 문서 초안 단계부터 리뷰에 참여하는 것이 좋습니다."},
+{id:"q202",ch:2,q:"개발자가 먼저 테스트를 작성하고, 그 테스트를 통과하도록 코드를 작성한 뒤, 코드를 다듬는(리팩터링) 방식을 반복한다. 이 접근법은?",o:["TDD (테스트 주도 개발)","ATDD (인수 테스트 주도 개발)","BDD (행위 주도 개발)","DevOps"],a:0,e:"TDD는 테스트 → 코드 → 리팩터링을 반복하는 개발자 중심의 테스트 우선 접근법입니다."},
+{id:"q203",ch:2,q:"'Given 잔액이 0원인 유저가, When 게임방 입장을 누르면, Then 충전 안내가 표시된다'처럼 원하는 동작을 쉬운 문장 형식으로 표현하는 접근법은?",o:["TDD","BDD","정적 분석","탐색적 테스팅"],a:1,e:"BDD는 Given/When/Then 형식의 자연어로 원하는 동작을 표현해, 이해관계자 모두가 이해할 수 있게 합니다."},
+{id:"q204",ch:2,q:"다음 중 '시프트 레프트'의 예로 가장 알맞은 것은?",o:["출시 후 사용자 피드백으로 테스트한다","요구사항을 테스터 관점에서 일찍 리뷰하고, 코드를 올리기 전에 정적 분석을 한다","시스템 테스트 기간을 두 배로 늘린다","인수 테스트만 집중적으로 한다"],a:1,e:"시프트 레프트는 테스팅을 개발 과정의 앞쪽(더 일찍)으로 옮기는 것입니다."},
+{id:"q205",ch:2,q:"하나의 함수나 클래스를 다른 부분과 분리해서 단독으로 테스트하며, 주로 개발자가 수행하는 테스트 레벨은?",o:["시스템 테스트","컴포넌트 테스트","인수 테스트","시스템 통합 테스트"],a:1,e:"컴포넌트(단위) 테스트는 개별 구성요소를 따로 테스트하며, 보통 개발자가 자기 개발 환경에서 수행합니다."},
+{id:"q206",ch:2,q:"게임 서버와 외부 결제 대행사 시스템 사이의 연동(결제 요청·응답)이 제대로 되는지 확인하는 테스트 레벨은?",o:["컴포넌트 테스트","컴포넌트 통합 테스트","시스템 통합 테스트","인수 테스트"],a:2,e:"우리 시스템과 외부 시스템·서비스 사이의 인터페이스를 테스트하는 것은 시스템 통합 테스트입니다."},
+{id:"q207",ch:2,q:"사용자나 고객이 시스템이 출시해도 될 만큼 준비되었는지 확인하는 테스트 레벨로, 알파·베타 테스트도 이에 포함되는 것은?",o:["시스템 테스트","인수 테스트","컴포넌트 통합 테스트","유지보수 테스트"],a:1,e:"인수 테스트에는 사용자 인수, 운영 인수, 계약·규제 인수, 알파·베타 테스트가 있습니다."},
+{id:"q208",ch:2,q:"'피박 점수 계산 오류' 결함이 수정되었다. 수정된 빌드에서 원래 그 결함을 발견했던 테스트를 다시 실행했다. 이 테스트는?",o:["회귀 테스팅","확인 테스팅","스모크 테스팅","유지보수 테스팅"],a:1,e:"결함이 제대로 고쳐졌는지 다시 확인하는 것은 확인 테스팅(재테스트)입니다."},
+{id:"q209",ch:2,q:"코드 수정 후, 수정과 관계없는 기존 기능들이 여전히 잘 동작하는지 확인하는 테스트에 대한 설명으로 옳은 것은?",o:["확인 테스팅이라고 하며 한 번만 실행한다","회귀 테스팅이라고 하며 반복 실행되므로 자동화 후보로 좋다","인수 테스팅이라고 하며 고객이 수행한다","정적 테스팅이라고 하며 코드를 실행하지 않는다"],a:1,e:"회귀 테스팅은 변경으로 인한 의도치 않은 부작용을 찾습니다. 자주 반복되므로 자동화하기 좋습니다."},
+{id:"q210",ch:2,q:"다음 중 유지보수 테스팅의 계기(트리거)가 아닌 것은?",o:["운영 중인 서비스의 긴급 패치","서버를 다른 클라우드 플랫폼으로 이전","서비스 종료에 따른 데이터 보관 및 복구 확인","신규 프로젝트의 첫 요구사항 작성"],a:3,e:"유지보수 테스팅은 이미 운영 중인 시스템의 수정, 업그레이드·마이그레이션, 은퇴(종료) 때 수행합니다."},
+{id:"q211",ch:2,q:"다음 중 비기능 테스트에 해당하는 것은?",o:["동시 접속자 1만 명일 때도 게임방 입장이 2초 이내에 되는지 확인","비밀번호를 틀리면 오류 메시지가 나오는지 확인","고도리를 모으면 5점이 더해지는지 확인","판이 끝나면 판돈이 정산되는지 확인"],a:0,e:"성능은 비기능 품질 특성입니다. 나머지는 '무엇을 하는가'를 확인하는 기능 테스트입니다."},
+/* 3장 */
+{id:"q301",ch:3,q:"정적 테스팅에 대한 설명으로 옳은 것은?",o:["테스트 대상을 실행하지 않고 산출물을 검토하거나 분석한다","테스트 대상을 실행해 실제 결과와 기대 결과를 비교한다","주로 부하와 성능을 측정한다","인수 테스트 단계에서만 수행한다"],a:0,e:"정적 테스팅은 리뷰와 정적 분석처럼 실행 없이 검사합니다. 모든 SDLC 단계에서 할 수 있습니다."},
+{id:"q302",ch:3,q:"동적 테스팅보다 정적 테스팅으로 더 쉽게 찾을 수 있는 결함은?",o:["실행 시 응답 속도 저하","도달할 수 없는 코드와 코딩 표준 위반","실제 기기에서의 화면 깨짐","장시간 실행 시 메모리 사용량 증가"],a:1,e:"도달 불가능한 코드, 코딩 표준 위반, 애매한 요구사항, 유지보수성 문제 등은 정적 테스팅으로 찾기 좋습니다."},
+{id:"q303",ch:3,q:"리뷰 프로세스 활동의 올바른 순서는?",o:["계획 → 리뷰 착수 → 개별 리뷰 → 이슈 소통 및 분석 → 수정 및 보고","리뷰 착수 → 계획 → 개별 리뷰 → 수정 및 보고 → 이슈 소통 및 분석","계획 → 개별 리뷰 → 리뷰 착수 → 이슈 소통 및 분석 → 수정 및 보고","개별 리뷰 → 계획 → 리뷰 착수 → 이슈 소통 및 분석 → 수정 및 보고"],a:0,e:"계획 → 착수 → 개별 리뷰 → 소통·분석 → 수정·보고 순서입니다."},
+{id:"q304",ch:3,q:"리뷰 회의가 효과적으로 진행되도록 이끌고, 참여자들이 편하게 의견을 낼 수 있는 분위기를 만드는 역할은?",o:["작성자","서기","중재자(퍼실리테이터)","관리자"],a:2,e:"중재자(모더레이터, 퍼실리테이터)는 리뷰 회의를 효과적으로 진행하고 안전한 분위기를 만듭니다."},
+{id:"q305",ch:3,q:"가장 공식적인 리뷰 유형으로, 정해진 프로세스를 따르고 지표를 수집하며, 작성자가 리뷰 리더나 서기를 맡을 수 없는 것은?",o:["비공식 리뷰","워크스루","기술 리뷰","인스펙션"],a:3,e:"인스펙션은 가장 공식적인 리뷰로, 지표를 수집해 프로세스 개선에도 활용합니다."},
+{id:"q306",ch:3,q:"작성자가 직접 주도해서 문서를 설명하며, 교육·합의·아이디어 얻기 등을 목적으로 하는 리뷰 유형은?",o:["워크스루","인스펙션","기술 리뷰","비공식 리뷰"],a:0,e:"워크스루는 작성자가 주도합니다. 품질 평가, 교육, 합의, 새 아이디어 생성 등이 목적입니다."},
+{id:"q307",ch:3,q:"다음 중 리뷰의 성공 요인으로 보기 어려운 것은?",o:["명확한 목표와 측정 가능한 종료 조건을 정한다","리뷰 대상을 작은 단위로 나눈다","리뷰 결과를 작성자의 개인 성과 평가에 사용한다","참여자에게 충분한 준비 시간을 준다"],a:2,e:"리뷰 결과를 개인 평가에 쓰면 작성자가 방어적이 되어 리뷰가 실패하기 쉽습니다."},
+/* 4장 */
+{id:"q401",ch:4,q:"유저 나이 입력 칸은 정수만 받으며, 14~99는 정상 처리하고 그 밖의 값은 거부한다. 동등 분할로 모든 파티션을 커버하려면 최소 몇 개의 테스트가 필요한가?",o:["2개","3개","4개","6개"],a:1,e:"파티션: 13 이하(비유효), 14~99(유효), 100 이상(비유효) → 3개. 파티션마다 하나씩이면 최소 3개입니다."},
+{id:"q402",ch:4,q:"베팅 금액은 100~5000(정수) 사이만 허용된다. 2값 경계값 분석을 적용할 때 테스트할 값으로 옳은 것은?",o:["100, 5000","99, 100, 5000, 5001","99, 100, 101, 4999, 5000, 5001","1, 100, 5000, 9999"],a:1,e:"2값 경계값은 각 경계값과 그 바로 바깥 이웃입니다. 99, 100, 5000, 5001."},
+{id:"q403",ch:4,q:"유효 범위가 10~50(정수)일 때 3값 경계값 분석으로 필요한 테스트 값은 몇 개인가?",o:["4개","5개","6개","8개"],a:2,e:"경계 10 → 9, 10, 11 / 경계 50 → 49, 50, 51 → 총 6개입니다."},
+{id:"q404",ch:4,q:"조건이 3개이고 각 조건이 참/거짓 값만 가진다. 축약하지 않은 전체 결정 테이블의 열(규칙) 수는?",o:["3","6","8","9"],a:2,e:"2 × 2 × 2 = 8개의 조합(열)이 나옵니다."},
+{id:"q405",ch:4,q:"결정 테이블 테스팅이 특히 효과적인 상황은?",o:["입력값의 범위 끝을 확인할 때","여러 조건의 조합에 따라 결과가 달라지는 업무 규칙을 테스트할 때","시스템 상태가 이벤트에 따라 바뀔 때","명세가 전혀 없을 때"],a:1,e:"결정 테이블은 조건 조합과 그에 따른 결과(액션)를 체계적으로 정리합니다."},
+{id:"q406",ch:4,q:"상태 전이 테스팅에서 '유효 전이 커버리지 100%'의 의미는?",o:["모든 상태를 최소 한 번 방문했다","모든 유효한 전이를 최소 한 번 실행했다","모든 비유효 전이를 시도했다","모든 경로를 끝까지 실행했다"],a:1,e:"유효 전이 커버리지(0-스위치 커버리지)는 모든 유효한 전이를 실행한 정도입니다. 100%면 모든 상태 커버리지도 자동으로 100%입니다."},
+{id:"q407",ch:4,q:"게임 상태: [로그아웃] →로그인→ [로비] →방 입장→ [게임 중] →판 종료→ [로비] →로그아웃→ [로그아웃]. '모든 상태 커버리지'를 달성하기 위한 최소 테스트 케이스 수는? (하나의 테스트 케이스는 [로그아웃]에서 시작)",o:["1개","2개","3개","4개"],a:0,e:"로그아웃 → 로비 → 게임 중 흐름 하나로 세 상태를 모두 방문할 수 있습니다."},
+{id:"q408",ch:4,q:"구문(statement) 커버리지를 바르게 설명한 것은?",o:["실행된 실행 가능 구문 수를 전체 실행 가능 구문 수로 나눈 비율","실행된 분기 수를 전체 분기 수로 나눈 비율","테스트한 요구사항 수를 전체 요구사항 수로 나눈 비율","찾은 결함 수를 전체 결함 수로 나눈 비율"],a:0,e:"구문 커버리지 = (실행된 실행 가능 구문 ÷ 전체 실행 가능 구문) × 100%."},
+{id:"q409",ch:4,q:"구문 커버리지와 분기 커버리지의 관계로 옳은 것은?",o:["분기 커버리지 100%를 달성하면 구문 커버리지 100%도 달성된다","구문 커버리지 100%를 달성하면 분기 커버리지 100%도 달성된다","둘은 항상 같은 값이다","커버리지 100%면 결함이 없다"],a:0,e:"분기 커버리지가 더 강합니다. 분기 100% → 구문 100%는 보장되지만, 반대는 아닙니다. 커버리지 100%라도 결함이 없다는 뜻은 아닙니다."},
+{id:"q410",ch:4,q:"코드: IF 판돈 > 0 THEN 게임을 시작한다. (ELSE 없음) 분기 커버리지 100%를 위한 최소 테스트 케이스 수는?",o:["1개","2개","3개","4개"],a:1,e:"참(판돈 > 0)과 거짓(판돈 ≤ 0) 두 분기가 있으므로 2개가 필요합니다. 구문 커버리지 100%는 1개면 됩니다."},
+{id:"q411",ch:4,q:"테스터가 과거에 자주 발생했던 결함과 개발자가 흔히 저지르는 실수를 바탕으로 결함을 예상해 테스트하는 기법은?",o:["동등 분할","오류 추정","분기 테스팅","결정 테이블 테스팅"],a:1,e:"오류 추정은 경험 기반 기법입니다. 예상 결함 목록을 만들어 공격하는 것을 결함 공격이라고 합니다."},
+{id:"q412",ch:4,q:"탐색적 테스팅에 대한 설명으로 옳은 것은?",o:["명세가 충분할 때만 쓸 수 있다","테스트를 미리 모두 상세하게 설계한 뒤에만 실행한다","테스트 설계·실행·평가를 동시에 하며, 테스트 차터와 정해진 시간으로 하는 세션 기반 방식이 있다","코드 구조를 기반으로 하는 화이트박스 기법이다"],a:2,e:"탐색적 테스팅은 명세가 부족하거나 시간이 촉박할 때 특히 유용하며, 다른 기법을 보완합니다."},
+{id:"q413",ch:4,q:"체크리스트 기반 테스팅에 대한 설명으로 가장 알맞은 것은?",o:["코드의 분기를 기준으로 체크리스트를 자동 생성한다","테스터의 경험·지식·중요하게 여기는 것을 바탕으로 만든 확인 목록을 쓰며, 주기적으로 업데이트해야 한다","한 번 만든 체크리스트는 바꾸지 않는 것이 원칙이다","블랙박스 기법의 일종이다"],a:1,e:"체크리스트 기반 테스팅은 경험 기반 기법입니다. 개발자가 같은 실수를 덜 하게 되면 항목이 낡으므로 주기적 업데이트가 필요합니다."},
+{id:"q414",ch:4,q:"사용자 스토리의 3C에 해당하지 않는 것은?",o:["Card (카드)","Conversation (대화)","Confirmation (확인)","Code (코드)"],a:3,e:"3C는 Card, Conversation, Confirmation입니다."},
+{id:"q415",ch:4,q:"좋은 사용자 스토리의 조건 INVEST에서 'T'가 뜻하는 것은?",o:["Timely (시기적절)","Testable (테스트 가능)","Traceable (추적 가능)","Technical (기술적)"],a:1,e:"INVEST: Independent, Negotiable, Valuable, Estimable, Small, Testable."},
+{id:"q416",ch:4,q:"ATDD(인수 테스트 주도 개발)에 대한 설명으로 옳은 것은?",o:["개발이 끝난 뒤 고객이 혼자 테스트를 만든다","인수 조건에서 테스트를 먼저 만들며, 보통 긍정(정상) 테스트부터 작성하고 이해관계자가 함께 참여한다","코드 구조를 보고 테스트를 만든다","비기능 테스트에만 사용한다"],a:1,e:"ATDD는 테스트 우선 접근법입니다. 다양한 관점의 팀원이 함께 인수 조건과 테스트를 만듭니다."},
+{id:"q417",ch:4,q:"다음 중 블랙박스 테스트 기법이 아닌 것은?",o:["동등 분할","경계값 분석","상태 전이 테스팅","분기 테스팅"],a:3,e:"분기 테스팅은 코드 구조를 보는 화이트박스 기법입니다."},
+/* 5장 */
+{id:"q501",ch:5,q:"테스트 계획서에 일반적으로 들어가는 내용이 아닌 것은?",o:["테스트 범위와 목표","일정과 예산","테스트 접근법과 시작·종료 조건","개별 결함 하나하나의 상세한 재현 절차"],a:3,e:"결함 재현 절차는 결함 보고서에 들어갑니다."},
+{id:"q502",ch:5,q:"다음 중 '종료 조건'의 예로 가장 알맞은 것은?",o:["테스트 환경이 준비되어 있다","목표 커버리지에 도달했고, 미해결 치명 결함이 0건이다","테스트 가능한 요구사항이 확보되었다","테스트 도구 라이선스를 받았다"],a:1,e:"나머지 보기는 테스트를 '시작'하기 위한 시작 조건입니다."},
+{id:"q503",ch:5,q:"애자일 개발에서 종료 조건에 해당하는 것은?",o:["준비 정의(DoR, Definition of Ready)","완료 정의(DoD, Definition of Done)","제품 백로그","스프린트 회고"],a:1,e:"애자일에서 종료 조건은 완료 정의(DoD), 시작 조건은 준비 정의(DoR)라고 부릅니다."},
+{id:"q504",ch:5,q:"3점 추정에서 낙관치 6일, 가장 가능성 높은 값 9일, 비관치 18일일 때 추정치(E)는?",o:["9일","10일","11일","12일"],a:1,e:"E = (a + 4m + b) ÷ 6 = (6 + 36 + 18) ÷ 6 = 10일."},
+{id:"q505",ch:5,q:"팀원들이 각자 카드로 작업량을 추정해 동시에 공개하고, 차이가 크면 이유를 논의한 뒤 다시 추정하는 방식은 어떤 추정 기법의 변형인가?",o:["비율 기반 추정","외삽","와이드밴드 델파이","3점 추정"],a:2,e:"플래닝 포커는 전문가 기반 추정 기법인 와이드밴드 델파이의 변형입니다."},
+{id:"q506",ch:5,q:"과거 비슷한 프로젝트에서 개발 노력과 테스트 노력의 비율이 3:2였던 것을 이용해 이번 테스트 노력을 추정했다. 사용한 기법은?",o:["비율 기반 추정","외삽","3점 추정","위험 기반 추정"],a:0,e:"과거 데이터의 비율을 이용하는 것은 비율 기반 추정입니다. 외삽은 현재 프로젝트의 초기 측정값으로 앞을 예측합니다."},
+{id:"q507",ch:5,q:"위험 수준을 결정하는 두 가지 요소는?",o:["비용과 일정","발생 가능성과 영향","결함 수와 커버리지","인원과 도구"],a:1,e:"위험 수준은 보통 발생 가능성(likelihood)과 영향(impact)으로 결정합니다."},
+{id:"q508",ch:5,q:"다음 중 '제품 위험'에 해당하는 것은?",o:["결제 금액 계산 오류로 사용자가 손해를 볼 수 있다","QA 팀원 2명이 다음 달 퇴사한다","테스트 환경 구축이 2주 늦어진다","외부 협력사의 납품이 지연된다"],a:0,e:"제품 위험은 제품 품질 특성과 관련된 위험입니다. 나머지는 프로젝트 위험입니다."},
+{id:"q509",ch:5,q:"보험에 가입하거나 외부 업체와 계약해 위험을 다른 쪽으로 넘기는 대응을 무엇이라 하는가?",o:["위험 수용","위험 전가","위험 완화","비상 계획"],a:1,e:"위험을 제3자에게 넘기는 것은 위험 전가입니다. 테스팅은 주로 위험 '완화'에 해당합니다."},
+{id:"q510",ch:5,q:"테스트 피라미드에 대한 설명으로 옳은 것은?",o:["위층일수록 테스트 수가 많고 빠르다","아래층은 작고 빠르고 많은(독립적인) 테스트이고, 위로 갈수록 크고 느리고 적은 테스트이다","모든 층의 테스트 수는 같아야 한다","피라미드는 수동 테스트에만 해당한다"],a:1,e:"피라미드 아래는 단위 테스트처럼 작고 빠른 테스트가 많고, 위로 갈수록 범위가 큰 테스트가 적어집니다."},
+{id:"q511",ch:5,q:"테스팅 사분면에서 탐색적 테스팅, 사용성 테스팅, 사용자 인수 테스팅이 속하는 곳은?",o:["Q1 (기술 관점, 팀 지원)","Q2 (비즈니스 관점, 팀 지원)","Q3 (비즈니스 관점, 제품 비평)","Q4 (기술 관점, 제품 비평)"],a:2,e:"Q3는 비즈니스(사용자) 관점에서 제품을 평가하는 테스트로, 탐색적·사용성·사용자 인수 테스트가 속합니다."},
+{id:"q512",ch:5,q:"결함 보고서에 들어갈 내용으로 보기 어려운 것은?",o:["재현 단계","기대 결과와 실제 결과","심각도와 우선순위","결함을 만든 개발자의 벌점 기록"],a:3,e:"결함 보고서는 결함을 재현·수정하고 품질을 추적하기 위한 것이지 개인을 처벌하기 위한 것이 아닙니다."},
+{id:"q513",ch:5,q:"형상 관리가 테스팅을 지원하는 방식으로 옳은 것은?",o:["모든 테스트를 자동으로 실행해 준다","테스트 항목과 테스트웨어의 버전을 식별·통제·추적해, 어떤 버전으로 테스트했는지 알 수 있게 한다","결함의 근본 원인을 자동으로 찾아준다","테스트 케이스를 자동 생성한다"],a:1,e:"형상 관리로 빌드와 테스트웨어의 버전을 관리하면 테스트 결과를 재현하고 추적할 수 있습니다."},
+{id:"q514",ch:5,q:"테스트 진행 보고서와 테스트 완료 보고서를 바르게 구분한 것은?",o:["진행 보고서는 테스트 기간 중 정기적으로, 완료 보고서는 테스트(레벨·이터레이션 등)가 끝날 때 작성한다","둘 다 프로젝트 시작 전에 작성한다","진행 보고서는 고객만, 완료 보고서는 개발자만 본다","완료 보고서는 결함 보고서의 다른 이름이다"],a:0,e:"진행 보고서는 진행 중 상황 공유, 완료 보고서는 최종 결과와 교훈 정리가 목적입니다."},
+/* 6장 */
+{id:"q601",ch:6,q:"테스트 자동화의 이점으로 가장 알맞은 것은?",o:["반복적인 수동 작업 시간을 줄이고, 일관성과 객관적 측정을 높인다","도구를 도입하는 즉시 테스트 인력이 필요 없어진다","자동화 스크립트는 유지보수가 필요 없다","사람의 판단이 전혀 필요 없어진다"],a:0,e:"나머지 보기는 모두 자동화의 '비현실적 기대'에 해당하는 위험입니다."},
+{id:"q602",ch:6,q:"테스트 자동화의 위험에 해당하는 것은?",o:["테스트 결과의 일관성 증가","도구 도입과 유지에 드는 노력을 과소평가함","빠른 피드백","대량 부하 테스트 가능"],a:1,e:"자동화 위험: 비현실적 기대, 노력 과소평가, 도구 과의존, 벤더 의존, 오픈소스 지원 중단 등."},
+{id:"q603",ch:6,q:"가상 머신이나 컨테이너를 활용해 테스트 환경을 쉽게 늘리고 표준화하는 도구는 어떤 분류에 속하는가?",o:["관리 도구","정적 테스팅 도구","확장성 및 배포 표준화 지원 도구","협업 도구"],a:2,e:"가상 머신, 컨테이너 등은 확장성과 배포 표준화를 돕는 도구입니다."},
+{id:"q604",ch:6,q:"요구사항, 테스트, 결함, 형상을 관리하는 도구는 어떤 분류에 속하는가?",o:["관리 도구","비기능 테스트 도구","테스트 실행 도구","DevOps 도구"],a:0,e:"이슈 트래커, 테스트 관리 도구 등은 관리 도구입니다."},
+{id:"q605",ch:6,q:"코드를 실행하지 않고 코딩 표준 위반이나 잠재 결함을 찾아주는 도구는?",o:["성능 테스트 도구","정적 분석 도구","커버리지 측정 도구","테스트 실행 도구"],a:1,e:"정적 분석 도구는 정적 테스팅을 지원합니다."}
+];
+
+/* ===================== 추가 문제 ===================== */
+/* ===================== 추가 문제 ===================== */
+const Q2=[
+{id:"q113",ch:1,q:"테스트의 기대 결과를 정하는 데 사용하는 정보의 출처를 무엇이라 하는가?",o:["테스트 오라클","테스트 하네스","테스트 스위트","테스트 차터"],a:0,e:"테스트 오라클은 기대 결과를 알려주는 기준입니다. 명세서, 기존 시스템, 전문가 판단 등이 오라클이 될 수 있습니다."},
+{id:"q114",ch:1,q:"시스템이 사용자와 이해관계자의 실제 필요를 충족하는지 평가하는 것을 무엇이라 하는가?",o:["검증(verification)","확인(validation)","디버깅","형상 관리"],a:1,e:"확인(validation)은 '올바른 제품을 만들었나', 검증(verification)은 '명세대로 제품을 올바르게 만들었나'를 봅니다."},
+{id:"q115",ch:1,q:"요구사항 리뷰 단계에서 애매한 문장을 찾아 고쳤더니, 나중에 코드를 다시 고치는 비용이 크게 줄었다. 가장 관련 있는 원칙은?",o:["결함 집중","조기 테스팅으로 시간과 비용을 절약한다","테스트는 효과가 떨어진다","테스팅은 정황에 의존한다"],a:1,e:"결함을 개발 초기에 찾을수록 이후 산출물로 결함이 번지지 않아 비용이 적게 듭니다."},
+{id:"q116",ch:1,q:"테스트 절차를 만들어 테스트 스위트로 묶고, 실행 일정을 정하며, 테스트 환경을 구축하는 활동은?",o:["테스트 분석","테스트 설계","테스트 구현","테스트 완료"],a:2,e:"테스트 구현은 실행에 필요한 준비물(절차, 스위트, 데이터, 환경)을 만드는 단계입니다."},
+{id:"q117",ch:1,q:"테스트를 수행하고, 실제 결과를 기대 결과와 비교하며, 발견한 이상을 분석해 보고하는 활동은?",o:["테스트 실행","테스트 구현","테스트 모니터링","테스트 계획"],a:0,e:"테스트 실행 단계의 핵심 업무입니다."},
+{id:"q118",ch:1,q:"테스트 프로세스(정황)에 영향을 주는 요소로 보기 어려운 것은?",o:["이해관계자의 요구와 협조","팀의 역량과 경험","비즈니스 도메인과 위험 수준","경쟁사 QA 직원의 개인 취미"],a:3,e:"정황 요소: 이해관계자, 팀원, 비즈니스 도메인, 기술 요인, 프로젝트 제약(일정·예산·자원), 조직 요인, SDLC, 도구 등."},
+{id:"q119",ch:1,q:"테스트 관리 역할의 주된 업무로 가장 알맞은 것은?",o:["테스트 계획, 모니터링과 제어, 테스트 완료","테스트 케이스의 상세 설계","테스트 스크립트 직접 실행","단위 테스트 코드 작성"],a:0,e:"테스트 관리 역할은 전체 프로세스와 팀을 이끌고, 테스팅 역할은 분석·설계·구현·실행을 맡습니다."},
+{id:"q120",ch:1,q:"좋은 테스터에게 필요한 역량으로 보기 어려운 것은?",o:["테스팅 지식","꼼꼼함, 호기심, 비판적 사고","의사소통과 경청 능력","발견한 결함을 직접 코드에서 고치는 능력"],a:3,e:"결함 수정은 개발자의 일입니다. 테스터에게는 테스팅 지식, 세심함, 소통 능력, 도메인·기술 지식이 중요합니다."},
+{id:"q121",ch:1,q:"QA 결과 결함이 0건이 나오자 담당자가 '이 제품에는 결함이 하나도 없다'고 발표했다. 어떤 원칙에 어긋나는가?",o:["테스팅은 결함이 있음을 보여줄 뿐, 없음을 증명할 수 없다","결함 집중","조기 테스팅","테스트는 효과가 떨어진다"],a:0,e:"결함을 못 찾았다는 것이 결함이 없다는 뜻은 아닙니다."},
+{id:"q122",ch:1,q:"캐주얼 모바일 게임과 의료기기 소프트웨어에 똑같은 테스트 방식과 깊이를 적용하는 것은 적절하지 않다. 어떤 원칙과 관련 있는가?",o:["완벽한 테스팅은 불가능하다","테스팅은 정황에 의존한다","결함 집중","오류 부재의 궤변"],a:1,e:"분야, 위험, 규제, 개발 방식에 따라 알맞은 테스팅 방법이 다릅니다."},
+{id:"q212",ch:2,q:"반복적·점진적 개발(예: 애자일)에서의 테스팅 설명으로 옳은 것은?",o:["각 반복마다 기능이 더해져 회귀 테스트가 늘어나므로 자동화가 중요하다","테스트는 마지막 반복에서 한 번만 한다","정적 테스팅은 할 수 없다","테스터는 개발팀과 분리되어야만 한다"],a:0,e:"짧은 주기로 계속 변경되므로 빠른 피드백과 회귀 테스트 자동화가 중요해집니다."},
+{id:"q213",ch:2,q:"순차적 개발 모델(폭포수 등)에서 동적 테스팅은 주로 언제 이루어지는가?",o:["요구사항 단계에서만","코드가 작성된 이후인 개발 후반부","설계 단계에서만","유지보수 단계에서만"],a:1,e:"순차 모델에서는 코드가 늦게 나오므로 동적 테스팅도 후반에 합니다. 초기에는 테스터가 리뷰·분석·설계에 참여합니다."},
+{id:"q214",ch:2,q:"DevOps에서 테스팅 관점의 '위험(과제)'에 해당하는 것은?",o:["빠른 피드백","CI/CD 파이프라인을 정의하고 구축해야 하며, 자동화 유지에 노력이 든다","회귀 위험 감소","자동화로 일관성이 높아진다"],a:1,e:"나머지는 DevOps의 이점입니다."},
+{id:"q215",ch:2,q:"백업과 복구, 재해 복구, 사용자 관리, 유지보수 작업이 잘 되는지 확인하는 인수 테스트 형태는?",o:["사용자 인수 테스트","운영 인수 테스트","계약 인수 테스트","알파 테스트"],a:1,e:"운영 인수 테스트는 주로 운영팀·시스템 관리자가 운영 관점에서 수행합니다."},
+{id:"q216",ch:2,q:"화이트박스 테스트를 수행할 수 있는 테스트 레벨은?",o:["컴포넌트 테스트만","시스템 테스트만","인수 테스트만","모든 테스트 레벨"],a:3,e:"모든 테스트 유형은 모든 테스트 레벨에서 수행할 수 있습니다."},
+{id:"q217",ch:2,q:"유지보수 테스팅에서 '영향도 분석'을 하는 주된 목적은?",o:["변경이 시스템의 어느 부분에 영향을 주는지 파악해 회귀 테스트 범위를 정한다","개발자의 작업 속도를 측정한다","새 요구사항을 만든다","테스트 도구를 고른다"],a:0,e:"영향도 분석으로 의도한 결과와 부작용 가능성을 파악하고 테스트 범위를 결정합니다."},
+{id:"q218",ch:2,q:"회고(retrospective)에서 기대할 수 있는 결과로 알맞지 않은 것은?",o:["테스트 효율과 프로세스 개선","테스트웨어 품질 향상","팀의 학습과 결속","팀원별 실수 순위표를 만들어 인사 평가에 반영"],a:3,e:"회고는 비난이 아니라 개선을 위한 자리입니다."},
+{id:"q219",ch:2,q:"TDD, ATDD, BDD의 공통점은?",o:["코드를 작성하기 전에 테스트(또는 기대 동작)를 먼저 정의한다","모두 비기능 테스트 전용이다","모두 고객만 참여한다","모두 출시 후에 수행한다"],a:0,e:"셋 다 테스트 우선 접근법이며 시프트 레프트의 예입니다."},
+{id:"q308",ch:3,q:"이해관계자로부터 일찍, 자주 피드백을 받는 것의 이점은?",o:["요구사항 오해를 일찍 발견해 재작업과 실패를 줄인다","테스트를 하지 않아도 된다","결함 보고서가 필요 없어진다","일정이 반드시 단축된다"],a:0,e:"이해관계자가 상상한 것과 만든 것의 차이를 일찍 좁힐 수 있습니다."},
+{id:"q309",ch:3,q:"기술 리뷰의 주된 목적은?",o:["기술 전문가들이 기술적 문제에 대해 합의하고 결정을 내린다","작성자가 신입에게 문서를 교육한다","정해진 절차와 지표로 가장 공식적인 검사를 한다","절차 없이 동료에게 빠르게 의견을 받는다"],a:0,e:"보기 2는 워크스루, 3은 인스펙션, 4는 비공식 리뷰에 가깝습니다."},
+{id:"q310",ch:3,q:"리뷰에서 '리뷰어'의 역할은?",o:["리뷰 대상을 검토해 잠재 결함(이상)을 찾는다","리뷰 대상을 작성하고 수정한다","회의 내용을 기록한다","리뷰 자원을 배정한다"],a:0,e:"작성자=작성·수정, 서기=기록, 관리자=자원 배정입니다."},
+{id:"q311",ch:3,q:"정적 테스팅으로 검토하기 어려운 것은?",o:["요구사항 명세서","소스 코드","테스트 계획서","실행 중인 서버의 실시간 메모리 사용량"],a:3,e:"실시간 동작은 실행이 필요하므로 동적 테스팅의 영역입니다."},
+{id:"q312",ch:3,q:"리뷰 중 발견된 이상과 결정 사항, 새로 나온 의견을 기록하는 역할은?",o:["중재자","서기","리뷰 리더","관리자"],a:1,e:"서기(기록자)는 리뷰 정보를 모아 정리합니다."},
+{id:"q418",ch:4,q:"구매 금액(원, 정수)에 따라 0~9,999원 할인 없음, 10,000~49,999원 5% 할인, 50,000원 이상 10% 할인. 음수는 거부한다. 동등 분할로 모든 파티션을 커버하는 최소 테스트 수는?",o:["3개","4개","5개","6개"],a:1,e:"음수(비유효), 0~9,999, 10,000~49,999, 50,000 이상 → 4개 파티션입니다. 위쪽 끝이 없으므로 위쪽 비유효 파티션은 없습니다."},
+{id:"q419",ch:4,q:"위 할인 규칙에서 '5% 할인 시작' 경계에 2값 경계값 분석을 적용할 때 테스트할 값은?",o:["9,999원과 10,000원","10,000원과 10,001원","9,998원과 9,999원","10,000원 하나"],a:0,e:"2값 경계값은 경계값(10,000)과 바로 옆 다른 파티션의 이웃 값(9,999)입니다."},
+{id:"q420",ch:4,q:"상태 전이 테스팅에서 '비유효 전이'를 테스트한다는 것은?",o:["특정 상태에서 허용되지 않는 이벤트를 발생시켜 시스템이 올바르게 거부하는지 확인한다","모든 상태를 한 번씩 방문한다","유효한 전이만 실행한다","상태 다이어그램을 그리는 것이다"],a:0,e:"예: '게임 중' 상태에서 '로그인' 이벤트를 보내 거부되는지 확인. 모든 전이 커버리지에는 비유효 전이 시도가 포함됩니다."},
+{id:"q421",ch:4,q:"테스터가 닉네임 입력 칸에 빈칸만, 특수문자, 1,000자짜리 문자열 등 개발자가 놓치기 쉬운 값을 차례로 넣어 보았다. 어떤 기법인가?",o:["오류 추정(결함 공격)","동등 분할","분기 테스팅","결정 테이블 테스팅"],a:0,e:"흔히 생기는 실수를 예상해 공격하는 경험 기반 기법입니다."},
+{id:"q422",ch:4,q:"경험 기반 테스트 기법의 한계로 옳은 것은?",o:["커버리지를 측정하기 어렵고 테스터의 역량에 크게 좌우된다","명세가 반드시 필요하다","코드를 반드시 볼 수 있어야 한다","자동화만 가능하다"],a:0,e:"경험 기반 기법은 체계적 기법을 보완하는 용도로 많이 씁니다."},
+{id:"q423",ch:4,q:"화이트박스 테스트 기법의 약점으로 옳은 것은?",o:["아예 구현되지 않은(누락된) 요구사항은 찾기 어렵다","코드를 전혀 볼 수 없다","컴포넌트 테스트에서는 쓸 수 없다","커버리지를 측정할 수 없다"],a:0,e:"코드 구조를 기준으로 하므로, 코드에 없는 기능의 누락은 드러나지 않습니다."},
+{id:"q424",ch:4,q:"축약된 결정 테이블에서 조건 값 자리에 '-'로 표시하는 의미는?",o:["그 조건의 값이 결과에 영향을 주지 않는다(상관없음)","그 조건은 항상 거짓이다","그 조합은 테스트하지 않는다","그 조건은 오류다"],a:0,e:"'-'는 무관(don't care)을 뜻하며, 이를 이용해 열 수를 줄일 수 있습니다."},
+{id:"q425",ch:4,q:"인수 조건을 Given / When / Then 형식으로 쓰는 것은 어떤 형식인가?",o:["시나리오 지향","규칙 지향","코드 지향","위험 지향"],a:0,e:"규칙 지향은 체크리스트나 입출력 표 형식입니다."},
+{id:"q426",ch:4,q:"협업 기반 사용자 스토리 작성에 대한 설명으로 옳은 것은?",o:["비즈니스, 개발, 테스트 관점이 함께 참여해 공동으로 작성한다","제품 책임자가 혼자 작성한다","테스터는 참여하지 않는다","출시 후에 작성한다"],a:0,e:"여러 관점이 함께해야 모두가 같은 이해를 갖고, 테스트 가능한 스토리가 됩니다."},
+{id:"q427",ch:4,q:"탐색적 테스팅이 특히 효과적인 상황은?",o:["명세가 부족하거나 시간이 촉박할 때","모든 테스트가 완벽히 자동화되어 있을 때","법적으로 상세한 테스트 문서가 필요할 때만","코드 커버리지 100%를 증명해야 할 때"],a:0,e:"탐색적 테스팅은 다른 기법을 보완하며, 테스터가 경험과 기술을 갖췄을 때 효과가 큽니다."},
+{id:"q428",ch:4,q:"입력 칸의 동등 분할 결과 파티션이 5개다. 테스트 케이스가 그중 3개 파티션을 실행했다면 동등 분할 커버리지는?",o:["30%","50%","60%","75%"],a:2,e:"3 ÷ 5 = 60%. 커버리지 = 실행한 파티션 수 ÷ 전체 파티션 수."},
+{id:"q429",ch:4,q:"상태 다이어그램에 유효 전이가 8개 있다. 테스트로 그중 6개를 실행했다면 유효 전이 커버리지는?",o:["60%","75%","80%","100%"],a:1,e:"6 ÷ 8 = 75%."},
+{id:"q515",ch:5,q:"릴리스 계획에서 테스터가 기여하는 일로 알맞은 것은?",o:["테스트 가능한 사용자 스토리와 인수 조건 작성, 위험 분석과 노력 추정 참여","제품 가격 결정","마케팅 일정 확정","서버 구매 계약"],a:0,e:"테스터는 릴리스·이터레이션 계획에 참여해 테스트 관점을 반영합니다."},
+{id:"q516",ch:5,q:"프로젝트 초반에 측정한 실제 데이터를 바탕으로 이후 필요한 테스트 노력을 예측하는 추정 기법은?",o:["비율 기반 추정","외삽","와이드밴드 델파이","3점 추정"],a:1,e:"외삽은 현재 프로젝트 데이터의 추세를 이어서 예측합니다."},
+{id:"q517",ch:5,q:"위험 기반 테스팅에서 위험 분석 결과가 영향을 주는 것으로 거리가 먼 것은?",o:["테스트 범위와 깊이","사용할 테스트 기법","테스트 우선순위","회사의 연간 매출 목표"],a:3,e:"위험 분석 결과는 테스트 범위, 기법, 깊이, 우선순위, 테스트 유형 등에 반영됩니다."},
+{id:"q518",ch:5,q:"테스팅 지표(측정값)의 예로 보기 어려운 것은?",o:["테스트 실행률과 통과율","결함 밀도","요구사항 커버리지","개발자 개인 연봉"],a:3,e:"지표는 진행 상황, 품질, 커버리지, 비용 등을 측정합니다."},
+{id:"q519",ch:5,q:"다음 중 '테스트 제어' 활동의 예는?",o:["새로 식별된 위험에 맞춰 테스트 우선순위를 다시 정한다","결함 수를 그래프로 그린다","매일 실행률을 측정한다","테스트 계획서 초안을 쓴다"],a:0,e:"모니터링은 측정, 제어는 측정 결과에 따라 조치를 취하는 것입니다."},
+{id:"q520",ch:5,q:"출시 전날, 게임 첫 화면 로고에 회사 이름 철자가 틀린 것을 발견했다. 기능에는 문제가 없다. 이 결함을 가장 알맞게 분류한 것은?",o:["심각도 낮음, 우선순위 높음","심각도 높음, 우선순위 낮음","심각도 높음, 우선순위 높음","심각도 낮음, 우선순위 낮음"],a:0,e:"심각도는 시스템에 미치는 영향, 우선순위는 얼마나 빨리 고쳐야 하는지입니다. 기능 영향은 작지만 모두가 보는 곳이라 급합니다."},
+{id:"q521",ch:5,q:"위험 수준을 가능성 × 영향(각 1~5점)으로 계산한다. 가장 위험 수준이 높은 것은?",o:["A: 가능성 3, 영향 2","B: 가능성 2, 영향 4","C: 가능성 4, 영향 1","D: 가능성 1, 영향 5"],a:1,e:"A=6, B=8, C=4, D=5 → B가 가장 높습니다."},
+{id:"q522",ch:5,q:"테스팅 사분면의 Q4(기술 관점, 제품 비평)에 속하는 테스트는?",o:["성능, 보안 등 비기능 테스트와 스모크 테스트","탐색적 테스팅","사용자 인수 테스트","컴포넌트 테스트"],a:0,e:"Q4는 기술 관점에서 제품을 평가하며 주로 자동화합니다. 사용성은 Q3입니다."},
+{id:"q523",ch:5,q:"테스트 계획 수립의 목적으로 알맞지 않은 것은?",o:["테스트 목표를 달성할 방법과 일정을 문서화한다","이해관계자와 소통하는 수단이 된다","위험과 일정, 자원을 미리 고민하게 한다","모든 결함이 없음을 보장한다"],a:3,e:"어떤 계획도 결함 0건을 보장하지 못합니다."},
+{id:"q524",ch:5,q:"결함 보고서의 목적으로 옳은 것은?",o:["결함을 재현하고 해결할 수 있는 충분한 정보 제공, 품질 추적, 프로세스 개선 근거","작성자의 업무량 증명","개발자 처벌 근거 마련","고객에게 바로 공개하기 위한 홍보 자료"],a:0,e:"결함 보고서는 해결과 개선을 위한 소통 도구입니다."},
+{id:"q606",ch:6,q:"수천 명의 동시 접속을 흉내 내 서버 응답 속도를 측정하는 도구는 어디에 속하는가?",o:["비기능 테스트 도구","정적 테스팅 도구","관리 도구","협업 도구"],a:0,e:"사람이 수동으로 하기 어려운 부하·성능 테스트를 돕는 비기능 테스트 도구입니다."},
+{id:"q607",ch:6,q:"코드가 올라오면 자동으로 빌드하고 테스트를 실행한 뒤 배포까지 이어주는 도구는?",o:["DevOps 도구","테스트 설계 도구","정적 분석 도구","결함 관리 도구"],a:0,e:"DevOps 도구는 CI/CD 파이프라인과 자동 빌드·배포를 지원합니다."},
+{id:"q608",ch:6,q:"오픈소스 테스트 자동화 도구를 쓸 때의 위험으로 알맞은 것은?",o:["프로젝트가 중단되어 지원과 업데이트가 끊길 수 있다","항상 유료 라이선스가 필요하다","자동화가 불가능하다","결과가 사람보다 덜 일관적이다"],a:0,e:"벤더 도구는 회사가 문 닫을 위험, 오픈소스는 프로젝트가 중단될 위험이 있습니다."}
+];
+Q.push(...Q2);
+
+/* ===================== 용어 ===================== */
+/* [id, 장, 한글 용어, 영문, 쉬운 뜻, 예시] */
+const TERMS=[
+["t01",1,"테스트 대상","Test object","테스트하는 그 제품이나 부분.","이번 업데이트 빌드의 '친구 선물' 기능"],
+["t02",1,"테스트 베이시스","Test basis","무엇을 테스트할지 정하는 근거 자료. 기획서, 요구사항, 설계 문서 등.","신규 이벤트 기획서"],
+["t03",1,"테스트 조건","Test condition","테스트로 확인해야 할 항목(무엇을). 분석 단계에서 정함.","'출석 7일차 보상이 지급되는가'"],
+["t04",1,"테스트 케이스","Test case","사전 조건, 입력, 기대 결과를 정해둔 하나의 테스트.","7일 출석 계정으로 로그인 → 보상함에 금화 1만"],
+["t05",1,"테스트 절차","Test procedure","테스트 케이스들을 실행할 순서와 방법.",""],
+["t06",1,"테스트 스위트","Test suite","함께 실행하려고 묶어둔 테스트 케이스 모음.","출시 전 스모크 테스트 묶음"],
+["t07",1,"테스트웨어","Testware","테스트하며 만든 모든 산출물. 계획서, 케이스, 데이터, 스크립트, 보고서.",""],
+["t08",1,"테스트 오라클","Test oracle","기대 결과를 알려주는 기준이 되는 출처.","점수 규칙표, 기존 버전의 동작"],
+["t09",1,"커버리지","Coverage","정해둔 항목 중 테스트로 확인한 비율(%).","파티션 5개 중 4개 테스트 = 80%"],
+["t10",1,"커버리지 항목","Coverage item","커버리지를 셀 때 기준이 되는 단위. 파티션, 경계값, 전이, 분기 등.",""],
+["t11",1,"오류","Error / Mistake","사람이 저지른 실수.","기획 의도를 잘못 이해함"],
+["t12",1,"결함","Defect / Bug / Fault","코드·문서에 남은 흠. 흔히 버그라 부름.","점수 계산식이 틀림"],
+["t13",1,"장애","Failure","결함이 실행되어 실제로 잘못된 결과가 나온 것.","판이 끝났는데 점수가 틀리게 표시됨"],
+["t14",1,"근본 원인","Root cause","결함이 생긴 가장 밑바닥 이유.","요구사항 문서가 애매했음"],
+["t15",1,"디버깅","Debugging","장애의 원인을 찾아 분석하고 고치는 일. 주로 개발자.",""],
+["t16",1,"품질 보증","Quality assurance (QA)","프로세스를 개선해 문제를 예방하는 활동.",""],
+["t17",1,"품질 통제","Quality control (QC)","제품을 검사해 품질을 맞추는 활동. 테스팅이 대표적.",""],
+["t18",1,"검증","Verification","명세(요구사항)대로 만들었는지 확인. '제대로 만들었나?'",""],
+["t19",1,"확인","Validation","사용자의 진짜 필요를 충족하는지 확인. '맞는 걸 만들었나?'",""],
+["t20",1,"추적성","Traceability","요구사항-테스트 케이스-결과-결함을 서로 연결해 두는 것.",""],
+["t21",1,"테스트 독립성","Independence of testing","만든 사람과 다른 사람이 테스트하는 정도.",""],
+["t22",1,"전체 팀 접근법","Whole team approach","품질을 팀 모두가 함께 책임지는 방식.",""],
+["t23",2,"SDLC","Software development lifecycle","소프트웨어를 기획부터 운영·종료까지 만드는 전체 과정.","폭포수, 애자일 등"],
+["t24",2,"테스트 레벨","Test level","함께 묶어 관리하는 테스트 활동 단계. 컴포넌트~인수.",""],
+["t25",2,"컴포넌트 테스트","Component testing","함수·모듈 하나를 따로 테스트. 단위 테스트라고도 함.",""],
+["t26",2,"컴포넌트 통합 테스트","Component integration testing","모듈끼리의 연결(인터페이스)을 테스트.",""],
+["t27",2,"시스템 테스트","System testing","완성된 시스템 전체의 기능·비기능을 테스트.",""],
+["t28",2,"시스템 통합 테스트","System integration testing","우리 시스템과 외부 시스템 사이 연결을 테스트.","게임 서버 ↔ 결제 대행사"],
+["t29",2,"인수 테스트","Acceptance testing","사용자·고객이 출시 준비가 됐는지 확인.",""],
+["t30",2,"알파 테스트","Alpha testing","개발사 장소에서 사용자(또는 내부 인원)가 하는 인수 테스트.","사내 직원 대상 사전 플레이"],
+["t31",2,"베타 테스트","Beta testing","실제 사용자가 자기 환경에서 하는 인수 테스트.","CBT, OBT"],
+["t32",2,"기능 테스트","Functional testing","시스템이 '무엇을' 하는지 확인.",""],
+["t33",2,"비기능 테스트","Non-functional testing","시스템이 '얼마나 잘' 하는지 확인. 성능, 보안, 사용성 등.",""],
+["t34",2,"블랙박스 테스트","Black-box testing","내부 구조를 보지 않고 명세 기반으로 테스트.",""],
+["t35",2,"화이트박스 테스트","White-box testing","내부 코드 구조를 보고 테스트.",""],
+["t36",2,"확인 테스팅","Confirmation testing","고친 결함이 정말 고쳐졌는지 다시 확인. 재테스트.",""],
+["t37",2,"회귀 테스팅","Regression testing","변경 때문에 다른 기능이 망가지지 않았는지 확인.",""],
+["t38",2,"유지보수 테스팅","Maintenance testing","운영 중인 시스템을 수정·이전·종료할 때 하는 테스트.",""],
+["t39",2,"영향도 분석","Impact analysis","변경이 어디까지 영향을 주는지 미리 파악하는 것.",""],
+["t40",2,"시프트 레프트","Shift-left","테스트를 개발 과정의 앞쪽으로 당겨 일찍 하는 것.",""],
+["t41",2,"TDD","Test-driven development","테스트 먼저 → 코드 → 리팩터링을 반복하는 개발 방식.",""],
+["t42",2,"ATDD","Acceptance test-driven development","인수 조건에서 테스트를 먼저 만드는 방식.",""],
+["t43",2,"BDD","Behavior-driven development","Given/When/Then 문장으로 원하는 동작을 정의하는 방식.",""],
+["t44",2,"DevOps","DevOps","개발과 운영이 함께하며 빌드·테스트·배포를 자동화하는 방식.",""],
+["t45",2,"지속적 통합","Continuous integration (CI)","코드를 자주 합치고 그때마다 자동으로 빌드·테스트하는 것.",""],
+["t46",2,"회고","Retrospective","일을 마친 뒤 잘된 점·아쉬운 점·개선점을 돌아보는 회의.",""],
+["t47",3,"정적 테스팅","Static testing","실행하지 않고 산출물을 검토·분석하는 테스팅.",""],
+["t48",3,"동적 테스팅","Dynamic testing","소프트웨어를 실행해서 하는 테스팅.",""],
+["t49",3,"정적 분석","Static analysis","도구로 코드를 실행하지 않고 검사하는 것.","코딩 규칙 위반 자동 검출"],
+["t50",3,"리뷰","Review","사람이 산출물을 읽고 검토하는 정적 테스팅.",""],
+["t51",3,"비공식 리뷰","Informal review","정해진 절차 없이 하는 리뷰.","'이거 한번 봐줄래?'"],
+["t52",3,"워크스루","Walkthrough","작성자가 주도해 설명하는 리뷰. 교육·합의 목적.",""],
+["t53",3,"기술 리뷰","Technical review","기술 전문가들이 기술적 결정을 함께 내리는 리뷰.",""],
+["t54",3,"인스펙션","Inspection","가장 공식적인 리뷰. 정해진 절차, 지표 수집.",""],
+["t55",3,"중재자","Moderator / Facilitator","리뷰 회의를 효과적으로 진행하는 사람.",""],
+["t56",3,"서기","Scribe / Recorder","리뷰 중 이상과 결정 사항을 기록하는 사람.",""],
+["t57",3,"이상","Anomaly","기대와 다른 모든 상태. 결함일 수도 아닐 수도 있음.",""],
+["t58",4,"동등 분할","Equivalence partitioning","같게 처리되는 입력 묶음으로 나눠 묶음마다 하나씩 테스트.",""],
+["t59",4,"파티션","Partition","동등 분할에서 똑같이 처리되는 값의 묶음.","2~8자 닉네임"],
+["t60",4,"경계값 분석","Boundary value analysis","파티션의 끝 값을 테스트하는 기법. 2값·3값 방식.",""],
+["t61",4,"결정 테이블","Decision table","조건 조합별 결과를 표로 정리해 테스트하는 기법.",""],
+["t62",4,"상태 전이 테스팅","State transition testing","상태와 상태 변화를 기준으로 테스트하는 기법.",""],
+["t63",4,"0-스위치 커버리지","0-switch coverage","유효 전이 커버리지의 다른 이름. 유효 전이를 하나씩 실행.",""],
+["t64",4,"구문 커버리지","Statement coverage","실행된 코드 구문의 비율.",""],
+["t65",4,"분기 커버리지","Branch coverage","실행된 분기(갈림길)의 비율. 100%면 구문도 100%.",""],
+["t66",4,"오류 추정","Error guessing","경험으로 결함이 생길 곳을 예상해 테스트.",""],
+["t67",4,"결함 공격","Fault attack","예상 결함 목록을 만들어 하나씩 공격하는 오류 추정 방식.",""],
+["t68",4,"탐색적 테스팅","Exploratory testing","설계·실행·평가를 동시에 하며 배워 가는 테스팅.",""],
+["t69",4,"테스트 차터","Test charter","탐색적 테스트 세션의 목표를 적은 짧은 메모.","'60분, 결제 화면, 네트워크 끊김 위주'"],
+["t70",4,"체크리스트 기반 테스팅","Checklist-based testing","경험으로 만든 확인 목록에 따라 테스트.",""],
+["t71",4,"사용자 스토리","User story","'누가 / 무엇을 원한다 / 왜' 형식의 짧은 요구사항.",""],
+["t72",4,"인수 조건","Acceptance criteria","사용자 스토리가 완성됐다고 인정할 조건.",""],
+["t73",4,"INVEST","INVEST","좋은 사용자 스토리 조건: 독립, 협상가능, 가치, 추정가능, 작음, 테스트가능.",""],
+["t74",5,"테스트 계획서","Test plan","목표, 범위, 접근법, 일정, 자원, 위험 등을 적은 문서.",""],
+["t75",5,"시작 조건","Entry criteria","테스트를 시작하기 위한 전제 조건.","테스트 환경 준비 완료"],
+["t76",5,"종료 조건","Exit criteria","테스트를 끝내도 되는 기준.","치명 결함 0건"],
+["t77",5,"완료 정의","Definition of Done (DoD)","애자일에서의 종료 조건.",""],
+["t78",5,"준비 정의","Definition of Ready (DoR)","애자일에서의 시작 조건.",""],
+["t79",5,"위험","Risk","앞으로 생길 수 있는 나쁜 일. 수준 = 가능성 × 영향.",""],
+["t80",5,"제품 위험","Product risk","제품 품질과 관련된 위험.","결제 금액 계산 오류"],
+["t81",5,"프로젝트 위험","Project risk","프로젝트 진행과 관련된 위험.","인력 이탈, 일정 지연"],
+["t82",5,"위험 기반 테스팅","Risk-based testing","위험 분석 결과로 테스트 범위·우선순위를 정하는 방식.",""],
+["t83",5,"3점 추정","Three-point estimation","(낙관 + 4×보통 + 비관) ÷ 6 으로 노력을 추정.",""],
+["t84",5,"와이드밴드 델파이","Wideband Delphi","전문가들이 각자 추정→논의→재추정을 반복. 플래닝 포커가 변형.",""],
+["t85",5,"테스트 피라미드","Test pyramid","아래는 작고 빠른 테스트 많이, 위는 큰 테스트 적게.",""],
+["t86",5,"테스팅 사분면","Testing quadrants","테스트를 '기술/비즈니스' × '팀 지원/제품 비평' 4칸으로 나눈 그림.",""],
+["t87",5,"테스트 진행 보고서","Test progress report","테스트 중 정기적으로 상황을 알리는 보고서.",""],
+["t88",5,"테스트 완료 보고서","Test completion report","테스트가 끝날 때 결과와 교훈을 정리한 보고서.",""],
+["t89",5,"형상 관리","Configuration management","빌드와 테스트웨어의 버전을 식별·추적하는 관리.",""],
+["t90",5,"심각도","Severity","결함이 시스템에 주는 영향의 크기.",""],
+["t91",5,"우선순위","Priority","결함을 얼마나 빨리 고쳐야 하는지.",""],
+["t92",6,"테스트 자동화","Test automation","도구로 테스트를 자동으로 실행하는 것.",""],
+["t93",6,"테스트 관리 도구","Test management tool","요구사항·테스트·결함을 관리하는 도구.",""],
+["t94",6,"컨테이너","Container","프로그램과 실행 환경을 한 상자처럼 묶은 것. 환경을 쉽게 늘리고 똑같이 맞춤.",""]
+];
+
+/* ===================== 저장 ===================== */
+const KEY="ctfl-study-v1";
+const def=()=>({read:{},stats:{},wrong:{},star:{},exams:[],examDate:"",terms:{},days:{},goal:20,live:null});
+function load(){try{const r=localStorage.getItem(KEY);if(r)return Object.assign(def(),JSON.parse(r))}catch(e){}return def()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+let S=load();
+
+/* ===================== 도구 ===================== */
+const $=s=>document.querySelector(s);
+const $$=s=>document.querySelectorAll(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const br=s=>esc(s).replace(/\n/g,"<br>");
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const rint=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const L="abcd";
+const qById=id=>Q.find(q=>q.id===id);
+const chOf=n=>CH.find(c=>c.n===n);
+const cvar=n=>`--c:var(--c${n})`;
+const ymd=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const today=()=>ymd(new Date());
+const nf=n=>n.toLocaleString("ko-KR");
+function bump(n){n=n||1;const t=today();const before=S.days[t]||0;S.days[t]=before+n;if(before<S.goal&&S.days[t]>=S.goal)setTimeout(()=>toast("오늘 목표 달성! 잘하셨어요"),400)}
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(window._tt);window._tt=setTimeout(()=>t.classList.remove("show"),2200)}
+function streak(){let d=new Date();if(!S.days[ymd(d)])d.setDate(d.getDate()-1);let n=0;while(S.days[ymd(d)]){n++;d.setDate(d.getDate()-1)}return n}
+function mkOpts(correct,ds){const seen=new Set([String(correct)]);const out=[];for(const d of ds){const s=String(d);if(!seen.has(s)){seen.add(s);out.push(s)}if(out.length===3)break}let k=1;while(out.length<3){const s=String(correct)+"·"+k++;if(!seen.has(s)){seen.add(s);out.push(s)}}const o=shuffle([String(correct),...out]);return{o,a:o.indexOf(String(correct))}}
+
+/* ===================== 계산 문제 생성기 ===================== */
+const GEN={
+ ep:{ch:4,t:"동등 분할 개수",f:genEP},
+ bva:{ch:4,t:"경계값 분석",f:genBVA},
+ dt:{ch:4,t:"결정 테이블 열 수",f:genDT},
+ cov:{ch:4,t:"커버리지 계산",f:genCov},
+ br:{ch:4,t:"구문·분기 최소 테스트 수",f:genBr},
+ tp:{ch:5,t:"3점 추정",f:genTP}
+};
+const FIELDS=[["베팅 금액","원"],["닉네임 길이","자"],["캐릭터 레벨",""],["가입 나이","세"],["보유 코인","개"],["주문 수량","개"]];
+function tiersOf(k){const lo=pick([0,1,2,5,10,14,100]);let s=lo,t=[];for(let i=0;i<k;i++){const w=rint(4,30)*(lo>=100?10:1);t.push([s,s+w-1]);s+=w}return t}
+function genEP(){
+  const [f,u]=pick(FIELDS);const k=rint(1,3);const t=tiersOf(k);const capped=k===1||Math.random()<.5;
+  const names=["보상 없음","일반 보상","특별 보상"];
+  let desc=k===1?`${f} 값은 정수이며 ${t[0][0]}~${t[0][1]}${u}만 허용하고, 그 밖의 값은 거부한다.`:
+    `${f} 값은 정수로 입력한다. `+t.map((r,i)=>i===k-1&&!capped?`${r[0]}${u} 이상은 '${names[i]}'`:`${r[0]}~${r[1]}${u}는 '${names[i]}'`).join(", ")+`. ${t[0][0]}${u}보다 작은 값은 거부한다.`+(capped?` ${t[k-1][1]}${u}보다 큰 값도 거부한다.`:"");
+  const ans=k+1+(capped?1:0);
+  const parts=[`${t[0][0]-1}${u} 이하(비유효)`].concat(t.map((r,i)=>i===k-1&&!capped?`${r[0]}${u} 이상`:`${r[0]}~${r[1]}${u}`)).concat(capped?[`${t[k-1][1]+1}${u} 이상(비유효)`]:[]);
+  const {o,a}=mkOpts(ans+"개",[(ans-1)+"개",(ans+1)+"개",(ans+2)+"개"]);
+  return{id:"g:ep",gen:"ep",ch:4,q:desc+" 동등 분할로 모든 파티션을 커버하려면 최소 몇 개의 테스트가 필요한가?",o,a,e:`파티션: ${parts.join(" / ")} → ${ans}개. 파티션마다 대표값 하나씩이면 됩니다.`};
+}
+function bvaVals(t,m){const v=new Set();t.forEach(([s,e])=>{if(m===2){[s-1,s,e,e+1].forEach(x=>v.add(x))}else{[s-1,s,s+1,e-1,e,e+1].forEach(x=>v.add(x))}});return[...v].sort((a,b)=>a-b)}
+function genBVA(){
+  const [f,u]=pick(FIELDS);const m=rint(2,3);const k=Math.random()<.6?1:2;const t=tiersOf(k);
+  const vals=bvaVals(t,m);
+  const rangeTxt=k===1?`${t[0][0]}~${t[0][1]}${u}만 허용(정수)`:`${t[0][0]}~${t[0][1]}${u}는 A등급, ${t[1][0]}~${t[1][1]}${u}는 B등급, 그 밖은 거부(정수)`;
+  const e=`${m}값 경계값은 각 경계에서 ${m===2?"경계값과 바로 바깥 이웃":"경계값과 양쪽 이웃"}을 씁니다. 테스트 값: ${vals.join(", ")} → ${vals.length}개.`;
+  if(k===1&&Math.random()<.5){
+    const [lo,hi]=t[0];const fmt=a=>a.join(", ");
+    const two=fmt([lo-1,lo,hi,hi+1]),three=fmt([lo-1,lo,lo+1,hi-1,hi,hi+1]);
+    const correct=m===2?two:three;
+    const {o,a}=mkOpts(correct,[m===2?three:two,fmt([lo,hi]),fmt([lo,lo+1,hi-1,hi]),fmt([lo-2,lo-1,hi+1,hi+2])]);
+    return{id:"g:bva",gen:"bva",ch:4,q:`${f}: ${rangeTxt}. ${m}값 경계값 분석으로 테스트할 값으로 옳은 것은?`,o,a,e};
+  }
+  const n=vals.length;const {o,a}=mkOpts(n+"개",[(n-2)+"개",(n+2)+"개",(n+4)+"개",(n*2)+"개"]);
+  return{id:"g:bva",gen:"bva",ch:4,q:`${f}: ${rangeTxt}. ${m}값 경계값 분석을 적용할 때 필요한 서로 다른 테스트 값은 몇 개인가?`,o,a,e};
+}
+function genDT(){
+  const pool=shuffle(["VIP 회원인가","이벤트 기간인가","첫 결제인가","친구 초대 코드가 있는가","출석 7일 이상인가"]);
+  let n,ans,q,e;
+  if(Math.random()<.65){n=rint(2,5);ans=2**n;const c=pool.slice(0,n);q=`보상 지급 규칙의 조건이 ${n}개다: ${c.map(x=>"'"+x+"'").join(", ")} (각각 예/아니오). 축약하지 않은 전체 결정 테이블의 열(규칙) 수는?`;e=`조건마다 2가지 값 → 2를 ${n}번 곱합니다. 2^${n} = ${ans}.`}
+  else{n=rint(1,3);ans=3*2**n;const c=pool.slice(0,n);q=`조건이 '회원 등급(일반/실버/골드)'과 ${c.map(x=>"'"+x+"'").join(", ")}(각각 예/아니오)이다. 축약하지 않은 전체 결정 테이블의 열 수는?`;e=`등급 3가지 × 예/아니오 조건 ${n}개(2^${n}) = 3 × ${2**n} = ${ans}.`}
+  const {o,a}=mkOpts(ans+"열",[(ans/2)+"열",(ans*2)+"열",(ans-1)+"열",(n+1)*2+"열"]);
+  return{id:"g:dt",gen:"dt",ch:4,q,o,a,e};
+}
+function genCov(){
+  const kinds=[["구문","실행 가능한 구문"],["분기","분기"],["동등 분할","파티션"],["유효 전이","유효 전이"]];
+  const [nm,unit]=pick(kinds);let T,E;
+  do{T=pick([4,5,8,10,12,16,20,25,40,50]);E=rint(1,T-1)}while((E*100)%T!==0);
+  const p=E*100/T;const near=[Math.round((E-1)*100/T),Math.round((E+1)*100/T),Math.round((T-E)*100/T),Math.round(E*100/(T+E))];
+  const {o,a}=mkOpts(p+"%",near.filter(x=>x!==p).map(x=>x+"%").concat([(p+5)+"%",(p-5)+"%"]));
+  return{id:"g:cov",gen:"cov",ch:4,q:`테스트 대상에 ${unit}이(가) 총 ${T}개 있다. 테스트를 실행해 그중 ${E}개를 커버했다. ${nm} 커버리지는?`,o,a,e:`커버리지 = 커버한 개수 ÷ 전체 개수 = ${E} ÷ ${T} = ${p}%.`};
+}
+function genBr(){
+  const T=[
+   {code:"IF 판돈 > 0 THEN\n  게임 시작\nENDIF\nIF 친구 초대 = 예 THEN\n  보너스 지급\nENDIF",s:1,b:2,es:"두 조건이 모두 참인 테스트 1개면 모든 구문이 실행됩니다.",eb:"두 IF가 서로 독립이므로 (참, 참) 1개 + (거짓, 거짓) 1개 = 2개로 4개 분기를 모두 지납니다."},
+   {code:"IF 레벨 >= 10 THEN\n  고급방 입장\nELSE\n  초보방 입장\nENDIF",s:2,b:2,es:"THEN과 ELSE에 각각 구문이 있어 2개가 필요합니다.",eb:"참 분기 1개, 거짓 분기 1개 → 2개."},
+   {code:"IF 로그인 = 예 THEN\n  IF VIP = 예 THEN\n    VIP 보상 지급\n  ENDIF\nENDIF",s:1,b:3,es:"(로그인 예, VIP 예) 1개면 모든 구문이 실행됩니다.",eb:"(예, 예), (예, 아니오), (아니오) → 3개. 안쪽 IF는 바깥 조건이 참일 때만 실행되므로 하나로 합칠 수 없습니다."},
+   {code:"IF 잔액 >= 판돈 THEN\n  입장 허용\nELSE\n  충전 안내\nENDIF\nIF 이벤트 기간 = 예 THEN\n  이벤트 배너 표시\nENDIF",s:2,b:2,es:"THEN, ELSE를 각각 지나야 하고, 그중 하나에서 이벤트 기간을 예로 하면 2개로 충분합니다.",eb:"(참, 예)와 (거짓, 아니오) 2개로 4개 분기를 모두 지납니다."}
+  ];
+  const t=pick(T);const askB=Math.random()<.6;const ans=askB?t.b:t.s;
+  const {o,a}=mkOpts(ans+"개",["1개","2개","3개","4개"]);
+  return{id:"g:br",gen:"br",ch:4,q:`다음 코드에서 ${askB?"분기":"구문"} 커버리지 100%를 달성하기 위한 최소 테스트 케이스 수는?`,code:t.code,o,a,e:askB?t.eb:t.es};
+}
+function genTP(){
+  let a,m,b;do{a=rint(2,12);m=a+rint(1,6);b=m+rint(3,18)}while((a+4*m+b)%6!==0);
+  const E=(a+4*m+b)/6;const task=pick(["회귀 테스트","신규 이벤트 검증","결제 모듈 테스트","시스템 테스트"]);
+  if((b-a)%6===0&&Math.random()<.3){const sd=(b-a)/6;const {o,a:ai}=mkOpts(sd+"일",[(sd+1)+"일",E+"일",((b-a)/2)+"일",(sd*2)+"일",(sd+2)+"일"]);
+    return{id:"g:tp",gen:"tp",ch:5,q:`${task} 노력을 3점 추정한다. 낙관치 ${a}일, 가장 가능성 높은 값 ${m}일, 비관치 ${b}일일 때 표준편차는?`,o,a:ai,e:`표준편차 = (비관 − 낙관) ÷ 6 = (${b} − ${a}) ÷ 6 = ${sd}일.`}}
+  const {o,a:ai}=mkOpts(E+"일",[m+"일",Math.round((a+m+b)/3)+"일",(E+1)+"일",(E-1)+"일",(E+2)+"일",b+"일"]);
+  return{id:"g:tp",gen:"tp",ch:5,q:`${task} 노력을 3점 추정한다. 낙관치 ${a}일, 가장 가능성 높은 값 ${m}일, 비관치 ${b}일일 때 추정치 E는?`,o,a:ai,e:`E = (a + 4m + b) ÷ 6 = (${a} + ${4*m} + ${b}) ÷ 6 = ${E}일.`};
+}
+const genAny=()=>GEN[pick(Object.keys(GEN))].f();
+
+/* ===================== 기록 ===================== */
+function statKey(q){return q.gen?"g:"+q.gen:q.id}
+function record(q,ok,fromWrong){
+  if(q.term){const l=S.terms[q.tid]||0;S.terms[q.tid]=ok?Math.min(3,Math.max(l,1)+1):1;bump();save();return}
+  const k=statKey(q);const s=S.stats[k]||(S.stats[k]={c:0,w:0});ok?s.c++:s.w++;
+  if(!q.gen){if(!ok)S.wrong[q.id]=1;else if(fromWrong)delete S.wrong[q.id]}
+  bump();save();
+}
+function chAcc(n){let c=0,t=0;Object.entries(S.stats).forEach(([k,s])=>{const ch=k.startsWith("g:")?GEN[k.slice(2)]&&GEN[k.slice(2)].ch:(qById(k)||{}).ch;if(ch===n){c+=s.c;t+=s.c+s.w}});return{c,t,p:t?Math.round(c/t*100):null}}
+function allAcc(){let c=0,t=0;Object.values(S.stats).forEach(s=>{c+=s.c;t+=s.c+s.w});return t?c/t:null}
+const termTotal=()=>TERMS.length, termDone=()=>TERMS.filter(t=>S.terms[t[0]]===3).length;
+const conceptTotal=()=>CH.reduce((s,c)=>s+c.c.length,0);
+function readiness(){
+  const cp=Object.keys(S.read).length/conceptTotal(), tp=termDone()/termTotal();
+  let qp;const ex=S.exams.slice(-3);
+  if(ex.length)qp=ex.reduce((s,x)=>s+x.score,0)/ex.length/40;
+  else{const a=allAcc()||0;const solved=Object.keys(S.stats).filter(k=>!k.startsWith("g:")).length;qp=a*Math.min(1,solved/(Q.length*.6))}
+  return Math.round(100*(.15*cp+.15*tp+.7*qp));
+}
+
+/* ===================== 화면 전환 ===================== */
+let view="home",P=null,M=null,T=null,resetArm=false,pickCh=0,pMode="all",pLen=10,termTab="cards",termCh=0,wrongTab="wrong",backupOpen=false;
+function go(v){view=v;const nv=v==="wrong"?"practice":v;$$(".tab").forEach(t=>t.setAttribute("aria-current",t.dataset.v===nv?"page":"false"));render();window.scrollTo(0,0)}
+$$(".tab").forEach(t=>t.addEventListener("click",()=>go(t.dataset.v)));
+function render(){
+  const V=$("#view");
+  V.innerHTML=view==="home"?homeHTML():view==="learn"?learnHTML():view==="terms"?termsHTML():view==="practice"?(P?quizHTML():practiceStartHTML()):view==="wrong"?wrongHTML():(M?(M.done?mockResultHTML():mockHTML()):mockStartHTML());
+  bind();
+}
+
+/* ===================== 홈 ===================== */
+function heatHTML(){
+  const now=new Date();const start=new Date(now);start.setDate(now.getDate()-now.getDay()-28);
+  let h="";for(let i=0;i<35;i++){const d=new Date(start);d.setDate(start.getDate()+i);const k=ymd(d);const n=S.days[k]||0;const fut=d>now&&k!==today();
+    const lv=n===0?"":n<10?"l1":n<30?"l2":"l3";h+=`<i class="${lv} ${k===today()?"today":""}" style="${fut?"visibility:hidden":""}" title="${k} · ${n}"></i>`}
+  return h;
+}
+function homeHTML(){
+  const R=readiness();const C=2*Math.PI*44;
+  let dd="D-?",ddSub="시험 날짜를 정해 보세요";
+  if(S.examDate){const d=Math.round((new Date(S.examDate+"T00:00:00")-new Date(today()+"T00:00:00"))/864e5);dd=d>0?"D-"+d:d===0?"D-DAY":"시험 끝";ddSub=d>0?`하루 ${Math.max(1,Math.ceil((Q.length-Object.keys(S.stats).filter(k=>!k.startsWith("g:")).length)/d))}문제씩 풀면 전부 볼 수 있어요`:d===0?"오늘 시험이에요. 화이팅!":"수고하셨어요"}
+  const tc=S.days[today()]||0;const gp=Math.min(100,Math.round(tc/S.goal*100));const st=streak();
+  // 추천
+  const unread=CH.find(ch=>ch.c.some(x=>!S.read[x.id]));
+  const weak=CH.map(ch=>({ch,a:chAcc(ch.n)})).filter(x=>x.a.t>=4).sort((a,b)=>a.a.p-b.a.p)[0];
+  const wrongN=Object.keys(S.wrong).length;
+  const dueTerms=TERMS.filter(t=>S.terms[t[0]]!==3).length;
+  const tiles=[];
+  if(unread){const nx=unread.c.find(x=>!S.read[x.id]);tiles.push({c:unread.n,ic:"개",b:"이어서 개념",s:`${unread.n}장 · ${nx.term}`,act:"learn:"+unread.n})}
+  if(weak&&weak.a.p<75)tiles.push({c:weak.ch.n,ic:weak.a.p+"%",b:"약점 공략",s:`${weak.ch.n}장 ${weak.ch.t}`,act:"weak"});
+  else tiles.push({c:4,ic:"∞",b:"계산 문제",s:"숫자가 매번 바뀌어요",act:"calc"});
+  tiles.push({c:3,ic:"Aa",b:"용어 카드",s:`외울 카드 ${dueTerms}장`,act:"terms"});
+  if(wrongN)tiles.push({c:5,ic:wrongN,b:"오답 복습",s:"틀린 문제 다시 풀기",act:"wrong"});
+  else tiles.push({c:1,ic:"40",b:"모의고사",s:"실전처럼 60분",act:"mock"});
+  const chapLines=CH.map(ch=>{const a=chAcc(ch.n);const rd=ch.c.filter(x=>S.read[x.id]).length;return `<div class="chap-line" style="${cvar(ch.n)}"><span class="dot">${ch.n}</span><span class="small"><b>${esc(ch.t)}</b> <span class="muted tiny">· ${ch.q}문항 · 개념 ${rd}/${ch.c.length}</span></span><span class="mono small">${a.p===null?"–":a.p+"%"}</span><div class="track"><i style="width:${a.p??0}%"></i></div></div>`}).join("");
+  const ex=S.exams.slice(-10);
+  const spark=ex.length?`<div class="spark">${ex.map(x=>`<div class="b ${x.score<26?"fail":""}" style="height:${Math.max(6,x.score/40*100)}%"><span>${x.score}</span></div>`).join("")}<div class="pass-line" style="bottom:${26/40*100}%"></div></div><p class="tiny muted">점선 = 합격선 26점</p>`:`<p class="small muted">아직 본 모의고사가 없어요.</p>`;
+  return `<div class="stack">
+  <div class="top"><div><div class="label">ISTQB · CTFL v4.0</div><h1>합격노트</h1></div><span class="pill" style="background:var(--surface);color:var(--ink)"><i></i>${st}일 연속</span></div>
+  <section class="hero">
+    <div class="ring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="9"/><circle cx="50" cy="50" r="44" fill="none" stroke="var(--accent)" stroke-width="9" stroke-linecap="round" stroke-dasharray="${C*R/100} ${C}"/></svg><div class="v"><div><b>${R}</b><br><span>합격 준비도</span></div></div></div>
+    <div class="stack tight" style="min-width:0">
+      <div class="dd">${dd}</div>
+      <p class="sub">${esc(ddSub)}</p>
+      <label class="sub">시험일 <input type="date" id="examDate" value="${esc(S.examDate)}"></label>
+    </div>
+  </section>
+  <section class="card goal">
+    <div class="row between"><h3>오늘의 목표</h3><span class="mono small">${tc} / ${S.goal}</span></div>
+    <div class="goalbar"><i style="width:${gp}%"></i></div>
+    <div class="row between"><span class="tiny muted">문제 풀기, 용어 카드, 개념 체크가 모두 1씩 올라가요</span>
+    <span class="row" style="gap:4px">${[10,20,30,50].map(g=>`<button class="chip" style="padding:4px 9px;font-size:.76rem" data-goal="${g}" aria-pressed="${S.goal===g}">${g}</button>`).join("")}</span></div>
+  </section>
+  <div class="tiles">${tiles.map(t=>`<button class="tile" style="${cvar(t.c)}" data-act="${t.act}"><span class="sq">${esc(t.ic)}</span><b>${esc(t.b)}</b><span>${esc(t.s)}</span></button>`).join("")}</div>
+  <section class="card stack">
+    <div class="row between"><h3>장별 정답률</h3><span class="tiny muted">시험 비중 순서대로 보세요</span></div>
+    <div class="chaps">${chapLines}</div>
+  </section>
+  <section class="card stack">
+    <div class="row between"><h3>학습 달력</h3><span class="legend tiny muted">적음 <i style="background:var(--h0)"></i><i style="background:var(--h1)"></i><i style="background:var(--h2)"></i><i style="background:var(--h3)"></i> 많음</span></div>
+    <div class="heat">${heatHTML()}</div>
+    <p class="tiny muted">최근 5주. 칸 하나가 하루예요.</p>
+  </section>
+  <section class="card stack"><h3>모의고사 점수 변화</h3>${spark}</section>
+  <section class="card stack">
+    <h3>시험 정보</h3>
+    <div class="info"><div><b>40</b><span class="small">문항 · 4지선다</span></div><div><b>60분</b><span class="small">시험 시간</span></div><div><b>26개</b><span class="small">이상 맞히면 합격 (65%)</span></div><div><b>4장</b><span class="small">11문항으로 비중 최고</span></div></div>
+    <p class="tiny muted">모국어가 아닌 언어로 응시하면 75분. 응시료와 일정은 한국소프트웨어테스팅자격위원회(KSTQB) 공지를 확인하세요.</p>
+  </section>
+  <details class="card more" ${backupOpen?"open":""} id="moreBox"><summary>기록 백업 · 초기화</summary>
+    <div class="stack" style="margin-top:12px">
+      <p class="small muted">공부 기록은 이 기기 브라우저에만 저장돼요. 폰을 바꾸거나 앱으로 옮길 때 백업 코드를 복사해 두세요.</p>
+      <textarea id="exportBox" readonly aria-label="백업 코드">${esc(exportCode())}</textarea>
+      <button class="btn soft sm" id="copyBackup">백업 코드 복사</button>
+      <textarea id="importBox" placeholder="여기에 백업 코드를 붙여넣고 불러오기를 누르세요" aria-label="백업 코드 붙여넣기"></textarea>
+      <button class="btn soft sm" id="importBtn">불러오기</button>
+      ${resetArm?`<div class="confirm"><p class="small">읽은 개념, 문제 기록, 용어 카드, 오답노트, 모의고사 기록이 모두 지워집니다.</p><div class="row"><button class="btn sm" id="resetYes">모두 지우기</button><button class="btn sm ghost" id="resetNo">취소</button></div></div>`:`<button class="btn ghost sm" id="resetBtn">학습 기록 초기화</button>`}
+    </div>
+  </details>
+  </div>`;
+}
+function exportCode(){try{return btoa(unescape(encodeURIComponent(JSON.stringify(S))))}catch(e){return""}}
+
+/* ===================== 개념 ===================== */
+let openCh=null;
+function learnHTML(){
+  const done=Object.keys(S.read).length;
+  return `<div class="stack">
+  <div class="top"><div><div class="label">개념 공부 · ${done}/${conceptTotal()}</div><h1>쉬운 말 개념 정리</h1></div></div>
+  <p class="small muted">장을 눌러 펼치고, 이해한 개념은 체크하세요.</p>
+  ${CH.map(ch=>{const d=ch.c.filter(x=>S.read[x.id]).length;return `<details class="chap" id="chap${ch.n}" style="${cvar(ch.n)}" ${openCh===ch.n?"open":""}>
+    <summary><span class="num">${ch.n}</span><span><h3>${esc(ch.t)}</h3><span class="small muted">시험 ${ch.q}문항 · 개념 ${ch.c.length}개</span></span><span class="badge mono">${d}/${ch.c.length}</span></summary>
+    <div class="concepts">${ch.c.map(x=>`<article class="concept ${S.read[x.id]?"done":""}">
+      <h3>${esc(x.term)}</h3>
+      <p>${br(x.easy)}</p>
+      ${x.game?`<div class="box game"><b>게임 QA로 보면</b>${br(x.game)}</div>`:""}
+      ${x.tip?`<div class="box tip"><b>시험 포인트</b>${br(x.tip)}</div>`:""}
+      <label class="check"><input type="checkbox" data-read="${x.id}" ${S.read[x.id]?"checked":""}> 이해했어요</label>
+    </article>`).join("")}
+    <div class="row"><button class="btn sm" data-practice-ch="${ch.n}">${ch.n}장 문제 풀기</button><button class="btn soft sm" data-terms-ch="${ch.n}">${ch.n}장 용어 카드</button></div>
+    </div></details>`}).join("")}
+  </div>`;
+}
+
+/* ===================== 용어 ===================== */
+const termById=id=>TERMS.find(t=>t[0]===id);
+function lvName(l){return l===3?"외움":l===2?"헷갈림":l===1?"다시":"새 카드"}
+function buildDeck(){
+  let ts=TERMS.filter(t=>!termCh||t[1]===termCh);
+  const due=ts.filter(t=>S.terms[t[0]]!==3);if(due.length)ts=due;
+  const order=l=>l===1?0:l===undefined?1:l===2?2:3;
+  ts=shuffle(ts).sort((a,b)=>order(S.terms[a[0]])-order(S.terms[b[0]]));
+  T={deck:ts.map(t=>t[0]),i:0,on:false,res:{1:0,2:0,3:0}};
+}
+function termsHTML(){
+  const cnt=l=>TERMS.filter(t=>(S.terms[t[0]]||0)===l).length;
+  const chips=[`<button class="chip" data-tch="0" aria-pressed="${termCh===0}">전체</button>`].concat(CH.map(c=>`<button class="chip" data-tch="${c.n}" aria-pressed="${termCh===c.n}">${c.n}장</button>`)).join("");
+  let body="";
+  if(termTab==="cards"){
+    if(!T)buildDeck();
+    if(T.i>=T.deck.length){body=`<div class="card stack empty"><h2>한 바퀴 끝!</h2><p class="small muted">알아요 ${T.res[3]} · 헷갈려요 ${T.res[2]} · 몰라요 ${T.res[1]}</p><button class="btn" id="deckAgain">다시 섞어서 시작</button></div>`}
+    else{const t=termById(T.deck[T.i]);const lv=S.terms[t[0]];
+      body=`<div class="row between"><span class="badge" style="${cvar(t[1])}">${t[1]}장 · ${lvName(lv)}</span><span class="mono small muted">${T.i+1} / ${T.deck.length}</span></div>
+      <div class="progress"><i style="width:${T.i/T.deck.length*100}%"></i></div>
+      <button class="flip ${T.on?"on":""}" id="flip" aria-label="카드 뒤집기"><div class="inner">
+        <div class="face front"><span class="term">${esc(t[2])}</span><span class="en">${esc(t[3])}</span><span class="hint">눌러서 뜻 보기</span></div>
+        <div class="face back"><span class="en">${esc(t[2])} · ${esc(t[3])}</span><span class="def">${esc(t[4])}</span>${t[5]?`<span class="ex">예: ${esc(t[5])}</span>`:""}</div>
+      </div></button>
+      <div class="rate" id="rateArea" ${T.on?"":"hidden"}><button class="btn r0" data-rate="1">몰라요<small>곧 다시</small></button><button class="btn r1" data-rate="2">헷갈려요<small>나중에 다시</small></button><button class="btn r2" data-rate="3">알아요<small>외움 처리</small></button></div><button class="btn dark wide" id="flipBtn" ${T.on?"hidden":""}>뜻 보기</button>`}
+  }else if(termTab==="quiz"){
+    body=`<div class="card stack"><h3>뜻을 보고 용어 맞히기</h3><p class="small muted">${termCh?termCh+"장":"전체"} 용어에서 10문제를 내요. 맞히면 카드 단계가 올라가요.</p><button class="btn wide" id="startTermQuiz">퀴즈 시작</button></div>
+    <div class="card stack"><h3>용어 보고 뜻 맞히기</h3><p class="small muted">반대 방향으로도 연습해 보세요.</p><button class="btn soft wide" id="startTermQuiz2">퀴즈 시작</button></div>`;
+  }else{
+    body=`<input class="search" id="tsearch" type="search" placeholder="용어나 영어로 찾기 (예: 회귀, oracle)" aria-label="용어 검색"><div class="tlist" id="tlist">${termListHTML("")}</div>`;
+  }
+  return `<div class="stack">
+  <div class="top"><div><div class="label">용어 암기 · 외움 ${termDone()}/${termTotal()}</div><h1>용어 카드</h1></div></div>
+  <div class="boxes"><div><b>${cnt(0)}</b><span class="tiny muted">새 카드</span></div><div><b>${cnt(1)}</b><span class="tiny muted">다시</span></div><div><b>${cnt(2)}</b><span class="tiny muted">헷갈림</span></div><div><b style="color:var(--ok)">${cnt(3)}</b><span class="tiny muted">외움</span></div></div>
+  <div class="row">${[["cards","카드 넘기기"],["quiz","용어 퀴즈"],["list","용어 사전"]].map(([k,n])=>`<button class="chip" data-ttab="${k}" aria-pressed="${termTab===k}">${n}</button>`).join("")}</div>
+  ${termTab!=="list"?`<div class="row">${chips}</div>`:""}
+  ${body}
+  </div>`;
+}
+function termListHTML(f){
+  f=f.trim().toLowerCase();
+  const ts=TERMS.filter(t=>!f||t[2].toLowerCase().includes(f)||t[3].toLowerCase().includes(f)||t[4].toLowerCase().includes(f));
+  if(!ts.length)return `<p class="small muted">'${esc(f)}'에 맞는 용어가 없어요.</p>`;
+  return ts.map(t=>`<div class="titem" style="${cvar(t[1])}"><b>${esc(t[2])} <span class="mono tiny muted">${esc(t[3])}</span></b><span class="lv">${t[1]}장<br>${lvName(S.terms[t[0]])}</span><span class="small">${esc(t[4])}${t[5]?` <span class="muted">예: ${esc(t[5])}</span>`:""}</span></div>`).join("");
+}
+function termQuiz(reverse){
+  const pool=TERMS.filter(t=>!termCh||t[1]===termCh);
+  const list=shuffle(pool).slice(0,10).map(t=>{
+    const others=shuffle(TERMS.filter(x=>x[0]!==t[0]&&(x[1]===t[1]||Math.random()<.3))).slice(0,3);
+    const opts=shuffle([t,...others]);
+    return reverse?{id:"t:"+t[0],term:true,tid:t[0],ch:t[1],q:`'${t[2]}' (${t[3]})의 뜻으로 옳은 것은?`,o:opts.map(x=>x[4]),a:opts.indexOf(t),e:`${t[2]}: ${t[4]}`}
+                  :{id:"t:"+t[0],term:true,tid:t[0],ch:t[1],q:`다음 설명에 해당하는 용어는?\n"${t[4]}"`,o:opts.map(x=>`${x[2]} (${x[3]})`),a:opts.indexOf(t),e:`${t[2]} (${t[3]})${t[5]?" · 예: "+t[5]:""}`};
+  });
+  P={list,i:0,pick:null,right:0,mode:"term"};go("practice");
+}
+
+/* ===================== 문제 풀기 ===================== */
+const MODES=[
+ ["all","전체 문제","장 선택 가능"],
+ ["new","안 푼 문제","처음 보는 것만"],
+ ["weak","약점 공략","정답률 낮은 장 + 틀린 문제"],
+ ["calc","계산 문제 무한","숫자가 매번 바뀌어요"],
+ ["star","별표 문제","표시해 둔 문제"],
+ ["wrong","오답만","맞히면 오답노트에서 빠짐"]
+];
+function weakChapter(){const w=CH.map(ch=>({n:ch.n,a:chAcc(ch.n)})).filter(x=>x.a.t>=4).sort((a,b)=>a.a.p-b.a.p)[0];return w?w.n:4}
+function poolFor(mode){
+  let p=Q.filter(q=>!pickCh||q.ch===pickCh);
+  if(mode==="new")p=p.filter(q=>!S.stats[q.id]);
+  if(mode==="star")p=Q.filter(q=>S.star[q.id]);
+  if(mode==="wrong")p=Q.filter(q=>S.wrong[q.id]);
+  if(mode==="weak"){const wc=weakChapter();p=Q.filter(q=>q.ch===wc||S.wrong[q.id])}
+  return p;
+}
+function practiceStartHTML(){
+  const chips=[`<button class="chip" data-pick="0" aria-pressed="${pickCh===0}">전체</button>`].concat(CH.map(c=>`<button class="chip" data-pick="${c.n}" aria-pressed="${pickCh===c.n}">${c.n}장</button>`)).join("");
+  const pool=pMode==="calc"?null:poolFor(pMode);
+  const n=pool?pool.length:Infinity;
+  const usesCh=pMode==="all"||pMode==="new";
+  return `<div class="stack">
+  <div class="top"><div><div class="label">문제 풀기 · 고정 문제 ${Q.length}개 + 계산 문제</div><h1>오늘은 어떻게 풀까요?</h1></div></div>
+  <div class="modes">${MODES.map(([k,b,s])=>{let c="";if(k==="star")c=` (${Object.keys(S.star).length})`;if(k==="wrong")c=` (${Object.keys(S.wrong).length})`;return `<button class="mode" data-mode="${k}" aria-pressed="${pMode===k}"><b>${b}${c}</b><span>${s}</span></button>`}).join("")}</div>
+  ${usesCh?`<div class="card stack tight"><span class="label">범위</span><div class="row">${chips}</div></div>`:""}
+  ${pMode==="weak"?`<p class="small muted">지금 약점: ${weakChapter()}장 「${esc(chOf(weakChapter()).t)}」${Object.keys(S.wrong).length?" + 오답 "+Object.keys(S.wrong).length+"개":""}</p>`:""}
+  ${pMode!=="calc"?`<div class="row"><span class="small muted">문제 수</span>${[10,20,0].map(k=>`<button class="chip" data-len="${k}" aria-pressed="${pLen===k}">${k||"전부"}</button>`).join("")}</div>`:`<p class="small muted">경계값, 동등 분할, 결정 테이블, 커버리지, 구문·분기, 3점 추정 문제가 숫자를 바꿔 계속 나와요. 그만하기를 누를 때까지 이어집니다.</p>`}
+  <button class="btn wide" id="startPractice" ${n===0?"disabled":""}>${n===0?"풀 문제가 없어요":pMode==="calc"?"계산 문제 시작":`시작하기 · ${pLen&&pLen<n?pLen:n}문제`}</button>
+  <button class="btn ghost wide" data-goto="wrong">오답노트 · 별표 목록 보기</button>
+  </div>`;
+}
+function startPractice(){
+  if(pMode==="calc"){P={list:[genAny()],i:0,pick:null,right:0,mode:"calc",inf:true};render();window.scrollTo(0,0);return}
+  let p=shuffle(poolFor(pMode));if(pLen)p=p.slice(0,pLen);
+  P={list:p,i:0,pick:null,right:0,mode:pMode,fromWrong:pMode==="wrong"};render();window.scrollTo(0,0);
+}
+function quizHTML(){
+  if(!P.inf&&P.i>=P.list.length){
+    const n=P.list.length;const pct=Math.round(P.right/n*100);
+    return `<div class="stack"><div class="top"><div><div class="label">결과</div><h1>${n}문제 중 ${P.right}개 정답</h1></div></div>
+    <section class="card stack"><div class="row between"><span class="score">${pct}<span class="small muted">%</span></span><span class="stamp ${pct>=65?"pass":"fail"}">${pct>=65?"합격권":"조금 더"}</span></div><p class="small">${pct>=65?"합격선(65%)을 넘었어요. 이 감각 그대로 가요.":"합격선은 65%예요. 틀린 문제는 오답노트에 모였어요."}</p></section>
+    <div class="row"><button class="btn" id="againPractice">다시 풀기</button><button class="btn ghost" id="endPractice">처음으로</button></div></div>`;
+  }
+  const q=P.list[P.i];const answered=P.pick!==null;const ch=q.ch;
+  const title=P.mode==="term"?"용어 퀴즈":P.mode==="calc"?"계산 문제":P.fromWrong?"오답 다시 풀기":"문제 풀기";
+  return `<div class="stack">
+  <div class="top"><div><div class="label">${title}</div><h2 class="mono" style="font-family:var(--f-mono);font-size:1.2rem">${P.inf?`${P.i+1}번째 · 정답 ${P.right}`:`${P.i+1} / ${P.list.length}`}</h2></div><button class="btn ghost sm" id="endPractice">그만하기</button></div>
+  ${P.inf?"":`<div class="progress"><i style="width:${P.i/P.list.length*100}%"></i></div>`}
+  <section class="qcard" style="${cvar(ch)}">
+    <div class="row between"><span class="badge">${ch}장 ${esc(chOf(ch).t)}${q.gen?" · "+GEN[q.gen].t:""}</span>${!q.gen&&!q.term?`<button class="star" id="starBtn" aria-pressed="${!!S.star[q.id]}">${S.star[q.id]?"★ 별표됨":"☆ 별표"}</button>`:""}</div>
+    <p class="qtext">${br(q.q)}</p>
+    ${q.code?`<pre class="code">${esc(q.code)}</pre>`:""}
+    <div class="opts">${q.o.map((o,k)=>{let cls="";if(answered){if(k===q.a)cls="right";else if(k===P.pick)cls="wrong"}return `<button class="opt ${cls}" data-opt="${k}" ${answered?"disabled":""}><span class="bub">${L[k]}</span><span>${esc(o)}</span></button>`}).join("")}</div>
+    ${answered?`<div class="explain stack tight"><p class="verdict ${P.pick===q.a?"ok":"no"}">${P.pick===q.a?pick(["정답!","맞았어요","좋아요, 정답"]):"정답은 "+L[q.a]+"번"}</p><p>${esc(q.e)}</p></div>`:""}
+  </section>
+  ${answered?`<button class="btn wide dark" id="nextQ">${P.inf||P.i+1<P.list.length?"다음 문제":"결과 보기"}</button>`:`<p class="small muted">보기를 누르면 바로 채점돼요.</p>`}
+  </div>`;
+}
+
+/* ===================== 오답·별표 ===================== */
+function wrongHTML(){
+  const src=wrongTab==="wrong"?S.wrong:S.star;
+  const qs=Object.keys(src).map(qById).filter(Boolean).sort((a,b)=>a.id<b.id?-1:1);
+  const tabs=`<div class="row"><button class="chip" data-wtab="wrong" aria-pressed="${wrongTab==="wrong"}">오답 ${Object.keys(S.wrong).length}</button><button class="chip" data-wtab="star" aria-pressed="${wrongTab==="star"}">별표 ${Object.keys(S.star).length}</button></div>`;
+  const head=`<div class="top"><div><div class="label">복습 노트</div><h1>${wrongTab==="wrong"?"오답노트":"별표 문제"}</h1></div><button class="btn ghost sm" data-goto="practice">뒤로</button></div>`;
+  if(!qs.length)return `<div class="stack">${head}${tabs}<div class="empty stack"><h2>비어 있어요</h2><p class="small muted">${wrongTab==="wrong"?"틀린 문제가 여기에 자동으로 모여요.":"문제를 풀다가 ☆ 별표를 누르면 여기에 모여요."}</p></div></div>`;
+  return `<div class="stack">${head}${tabs}
+  <button class="btn wide" id="retryList">${wrongTab==="wrong"?"오답만 다시 풀기":"별표 문제 풀기"} · ${qs.length}문제</button>
+  ${qs.map(q=>{const s=S.stats[q.id]||{c:0,w:0};return `<div class="qcard" style="${cvar(q.ch)}"><div class="row between"><span class="badge">${q.ch}장</span><span class="mono tiny muted">틀림 ${s.w} · 맞힘 ${s.c}</span></div><p class="qtext">${br(q.q)}</p><p class="small" style="color:var(--ok)">정답 ${L[q.a]}. <b>${esc(q.o[q.a])}</b></p><p class="small">${esc(q.e)}</p></div>`}).join("")}
+  </div>`;
+}
+
+/* ===================== 모의고사 ===================== */
+function mockStartHTML(){
+  const ex=S.exams.slice(-5).reverse();const best=S.exams.reduce((m,x)=>Math.max(m,x.score),0);
+  return `<div class="stack">
+  <div class="top"><div><div class="label">모의고사</div><h1>실전처럼 40문제, 60분</h1></div></div>
+  <section class="hero" style="grid-template-columns:1fr">
+    <div class="stack tight"><span class="sub">장별 출제 비율 (실제 시험과 동일)</span>
+    <div class="pills">${CH.map(c=>`<span class="pill"><i style="background:var(--c${c.n})"></i>${c.n}장 ${c.q}</span>`).join("")}</div>
+    <p class="sub">고정 문제 37개 + 숫자가 바뀌는 계산 문제 3개로 매번 새로 구성돼요. 26개 이상이면 합격. 중간에 앱을 닫아도 이어서 볼 수 있어요.</p></div>
+  </section>
+  <button class="btn wide" id="startMock">모의고사 시작</button>
+  ${ex.length?`<section class="card stack"><div class="row between"><h3>지난 기록</h3><span class="small muted">최고 ${best}점</span></div>${ex.map(x=>`<div class="row between" style="border-bottom:1px dashed var(--line);padding-bottom:6px"><span class="small muted">${esc(x.date)}</span><span class="mono">${x.score}/40 <b style="color:var(${x.score>=26?"--ok":"--bad"})">${x.score>=26?"합격":"불합격"}</b></span></div>`).join("")}</section>`:""}
+  </div>`;
+}
+function startMock(){
+  let list=[];
+  CH.forEach(ch=>{const g=ch.n===4?2:ch.n===5?1:0;list=list.concat(shuffle(Q.filter(q=>q.ch===ch.n)).slice(0,ch.q-g));
+    if(ch.n===4)shuffle(["ep","bva","dt","cov","br"]).slice(0,2).forEach(k=>list.push(GEN[k].f()));
+    if(ch.n===5)list.push(genTP())});
+  M={list,ans:{},flag:{},i:0,end:Date.now()+60*60*1000,done:false,arm:false};S.live=M;save();startTimer();render();window.scrollTo(0,0);
+}
+function startTimer(){clearInterval(window._mt);window._mt=setInterval(tick,1000)}
+function fmt(ms){ms=Math.max(0,ms);const m=Math.floor(ms/60000),s=Math.floor(ms%60000/1000);return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")}
+function tick(){if(!M||M.done){clearInterval(window._mt);return}const left=M.end-Date.now();const el=$("#timer");if(el){el.textContent=fmt(left);el.classList.toggle("warn",left<5*60000)}if(left<=0){submitMock();toast("시간이 끝나 자동 제출했어요")}}
+function mockHTML(){
+  const q=M.list[M.i];const cnt=Object.keys(M.ans).length;const left=M.end-Date.now();
+  return `<div class="stack">
+  <div class="top"><div><div class="label">모의고사</div><h2 style="font-family:var(--f-mono);font-size:1.2rem">${M.i+1} / 40</h2></div><span class="timer ${left<5*60000?"warn":""}" id="timer" aria-label="남은 시간">${fmt(left)}</span></div>
+  <section class="qcard" style="${cvar(q.ch)}">
+    <div class="row between"><span class="badge">${q.ch}장</span><button class="star" id="flagBtn" aria-pressed="${!!M.flag[M.i]}">${M.flag[M.i]?"⚑ 다시 볼 문제":"⚐ 나중에 다시 보기"}</button></div>
+    <p class="qtext">${br(q.q)}</p>
+    ${q.code?`<pre class="code">${esc(q.code)}</pre>`:""}
+    <div class="opts">${q.o.map((o,k)=>`<button class="opt ${M.ans[M.i]===k?"sel":""}" data-mopt="${k}"><span class="bub">${L[k]}</span><span>${esc(o)}</span></button>`).join("")}</div>
+  </section>
+  <div class="row between"><button class="btn ghost" id="prevM" ${M.i===0?"disabled":""}>이전</button><button class="btn dark" id="nextM" ${M.i===39?"disabled":""}>다음</button></div>
+  <section class="card stack">
+    <div class="row between"><h3>답안지</h3><span class="mono small">${cnt}/40 표기</span></div>
+    <div class="grid40">${M.list.map((_,k)=>`<button class="cell ${M.ans[k]!==undefined?"ans":""} ${M.flag[k]&&M.ans[k]===undefined?"flag":""} ${k===M.i?"cur":""}" data-jump="${k}" aria-label="${k+1}번">${k+1}</button>`).join("")}</div>
+    <p class="tiny muted">까만 칸 = 표기함, 점선 = 다시 볼 문제</p>
+    ${M.arm?`<div class="confirm"><p class="small">${40-cnt>0?"아직 "+(40-cnt)+"문제를 안 풀었어요. 안 푼 문제는 오답 처리됩니다. ":""}지금 제출할까요?</p><div class="row"><button class="btn sm" id="submitYes">제출하고 채점</button><button class="btn sm ghost" id="submitNo">계속 풀기</button></div></div>`:`<button class="btn ghost wide" id="submitM">답안 제출</button>`}
+  </section>
+  <button class="btn ghost sm" id="quitMock">모의고사 그만두기 (기록 안 남김)</button>
+  </div>`;
+}
+function submitMock(){
+  if(!M||M.done)return;clearInterval(window._mt);
+  let score=0;const by={};
+  M.list.forEach((q,k)=>{const ok=M.ans[k]===q.a;if(ok)score++;by[q.ch]=by[q.ch]||{c:0,t:0};by[q.ch].t++;if(ok)by[q.ch].c++;
+    const key=statKey(q);const s=S.stats[key]||(S.stats[key]={c:0,w:0});ok?s.c++:s.w++;if(!q.gen&&!ok)S.wrong[q.id]=1});
+  bump(Object.keys(M.ans).length);
+  const d=new Date();M.done=true;M.score=score;M.by=by;
+  S.exams.push({date:`${d.getMonth()+1}월 ${d.getDate()}일 ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`,score});
+  if(S.exams.length>30)S.exams=S.exams.slice(-30);S.live=null;save();
+  if(view==="mock")render();
+}
+function mockResultHTML(){
+  const pass=M.score>=26;
+  const wrongs=M.list.map((q,k)=>({q,k})).filter(x=>M.ans[x.k]!==x.q.a);
+  return `<div class="stack">
+  <div class="top"><div><div class="label">모의고사 결과</div><h1>채점 완료</h1></div></div>
+  <section class="card stack">
+    <div class="row between"><span class="score">${M.score}<span class="small muted">/40</span></span><span class="stamp ${pass?"pass":"fail"}">${pass?"합격":"불합격"}</span></div>
+    <p class="small muted">합격선 26개 · ${pass?"여유 "+(M.score-26)+"개":(26-M.score)+"개 더 맞히면 합격"}</p>
+    <div class="chaps">${CH.map(ch=>{const b=M.by[ch.n];const p=Math.round(b.c/b.t*100);return `<div class="chap-line" style="${cvar(ch.n)}"><span class="dot">${ch.n}</span><span class="small">${esc(ch.t)}</span><span class="mono small">${b.c}/${b.t}</span><div class="track"><i style="width:${p}%"></i></div></div>`}).join("")}</div>
+  </section>
+  ${wrongs.length?`<div class="label">틀린 문제 ${wrongs.length}개 · 고정 문제는 오답노트에 저장됨</div>${wrongs.map(({q,k})=>`<div class="qcard" style="${cvar(q.ch)}"><span class="badge">${k+1}번 · ${q.ch}장</span><p class="qtext">${br(q.q)}</p>${q.code?`<pre class="code">${esc(q.code)}</pre>`:""}<p class="small">내 답: <b>${M.ans[k]===undefined?"안 품":L[M.ans[k]]+". "+esc(q.o[M.ans[k]])}</b></p><p class="small" style="color:var(--ok)">정답: <b>${L[q.a]}. ${esc(q.o[q.a])}</b></p><p class="small">${esc(q.e)}</p></div>`).join("")}`:`<div class="card"><h2>만점이에요!</h2></div>`}
+  <button class="btn wide" id="newMock">새 모의고사 보기</button>
+  </div>`;
+}
+
+/* ===================== 이벤트 ===================== */
+function on(sel,fn){const el=$(sel);if(el)el.addEventListener("click",fn)}
+function bind(){
+  const d=$("#examDate");if(d)d.addEventListener("change",()=>{S.examDate=d.value;save();render()});
+  $$("[data-goal]").forEach(b=>b.addEventListener("click",()=>{S.goal=+b.dataset.goal;save();render()}));
+  $$("[data-act]").forEach(b=>b.addEventListener("click",()=>{const a=b.dataset.act;
+    if(a.startsWith("learn:")){openCh=+a.split(":")[1];go("learn");const el=$("#chap"+openCh);if(el)el.scrollIntoView({block:"start"})}
+    else if(a==="weak"){pMode="weak";P=null;go("practice")}
+    else if(a==="calc"){pMode="calc";P=null;view="practice";startPractice();go("practice")}
+    else if(a==="terms"){termTab="cards";T=null;go("terms")}
+    else go(a)}));
+  const mb=$("#moreBox");if(mb)mb.addEventListener("toggle",()=>{backupOpen=mb.open});
+  on("#copyBackup",()=>{const v=$("#exportBox").value;const done=()=>toast("백업 코드를 복사했어요");try{navigator.clipboard.writeText(v).then(done,()=>{$("#exportBox").select();toast("코드를 길게 눌러 복사하세요")})}catch(e){$("#exportBox").select();toast("코드를 길게 눌러 복사하세요")}});
+  on("#importBtn",()=>{const v=$("#importBox").value.trim();if(!v){toast("백업 코드를 먼저 붙여넣으세요");return}try{const o=JSON.parse(decodeURIComponent(escape(atob(v))));if(typeof o!=="object"||!o.stats)throw 0;S=Object.assign(def(),o);save();M=null;P=null;T=null;toast("기록을 불러왔어요");render()}catch(e){toast("코드가 올바르지 않아요. 다시 복사해 보세요")}});
+  on("#resetBtn",()=>{resetArm=true;render()});
+  on("#resetNo",()=>{resetArm=false;render()});
+  on("#resetYes",()=>{S=def();save();resetArm=false;P=null;M=null;T=null;clearInterval(window._mt);toast("기록을 모두 지웠어요");render()});
+  // 개념
+  $$("details.chap").forEach(dt=>dt.addEventListener("toggle",()=>{if(dt.open)openCh=+dt.id.slice(4)}));
+  $$("[data-read]").forEach(c=>c.addEventListener("change",()=>{const id=c.dataset.read;if(c.checked){S.read[id]=1;bump()}else delete S.read[id];save();c.closest(".concept").classList.toggle("done",c.checked);const det=c.closest("details");const ch=CH.find(x=>"chap"+x.n===det.id);det.querySelector("summary .badge").textContent=ch.c.filter(x=>S.read[x.id]).length+"/"+ch.c.length;if(c.checked&&ch.c.every(x=>S.read[x.id]))toast(ch.n+"장 개념 완료!")}));
+  $$("[data-practice-ch]").forEach(b=>b.addEventListener("click",()=>{pickCh=+b.dataset.practiceCh;pMode="all";P=null;go("practice")}));
+  $$("[data-terms-ch]").forEach(b=>b.addEventListener("click",()=>{termCh=+b.dataset.termsCh;termTab="cards";T=null;go("terms")}));
+  // 용어
+  $$("[data-ttab]").forEach(b=>b.addEventListener("click",()=>{termTab=b.dataset.ttab;render()}));
+  $$("[data-tch]").forEach(b=>b.addEventListener("click",()=>{termCh=+b.dataset.tch;T=null;render()}));
+  const fl=()=>{T.on=!T.on;$("#flip").classList.toggle("on",T.on);$("#rateArea").hidden=!T.on;$("#flipBtn").hidden=T.on};
+  on("#flip",fl);on("#flipBtn",fl);
+  $$("[data-rate]").forEach(b=>b.addEventListener("click",()=>{const r=+b.dataset.rate;const id=T.deck[T.i];S.terms[id]=r;T.res[r]++;bump();save();
+    if(r===1&&T.deck.length-T.i>3){T.deck.splice(Math.min(T.deck.length,T.i+4),0,id)}
+    T.i++;T.on=false;render()}));
+  on("#deckAgain",()=>{T=null;render()});
+  on("#startTermQuiz",()=>termQuiz(false));
+  on("#startTermQuiz2",()=>termQuiz(true));
+  const ts=$("#tsearch");if(ts)ts.addEventListener("input",()=>{$("#tlist").innerHTML=termListHTML(ts.value)});
+  // 문제
+  $$("[data-mode]").forEach(b=>b.addEventListener("click",()=>{pMode=b.dataset.mode;render()}));
+  $$("[data-pick]").forEach(b=>b.addEventListener("click",()=>{pickCh=+b.dataset.pick;render()}));
+  $$("[data-len]").forEach(b=>b.addEventListener("click",()=>{pLen=+b.dataset.len;render()}));
+  on("#startPractice",startPractice);
+  $$("[data-opt]").forEach(b=>b.addEventListener("click",()=>{if(P.pick!==null)return;P.pick=+b.dataset.opt;const q=P.list[P.i];const ok=P.pick===q.a;if(ok)P.right++;record(q,ok,P.fromWrong);render()}));
+  on("#starBtn",()=>{const q=P.list[P.i];if(S.star[q.id])delete S.star[q.id];else S.star[q.id]=1;save();render()});
+  on("#nextQ",()=>{P.i++;P.pick=null;if(P.inf)P.list.push(genAny());render();window.scrollTo(0,0)});
+  on("#endPractice",()=>{const wasTerm=P&&P.mode==="term";const inf=P&&P.inf;const r=P?P.right:0,n=P?P.i+(P.pick!==null?1:0):0;P=null;if(inf&&n)toast(`계산 문제 ${n}개 중 ${r}개 정답`);if(wasTerm){go("terms")}else render()});
+  on("#againPractice",()=>{if(P.mode==="term"){termQuiz(P.list[0].q.startsWith("'"));return}const list=P.fromWrong?P.list.filter(q=>S.wrong[q.id]):P.list;P={list:shuffle(list.length?list:P.list),i:0,pick:null,right:0,mode:P.mode,fromWrong:P.fromWrong};render()});
+  $$("[data-wtab]").forEach(b=>b.addEventListener("click",()=>{wrongTab=b.dataset.wtab;render()}));
+  on("#retryList",()=>{const src=wrongTab==="wrong"?S.wrong:S.star;const list=Object.keys(src).map(qById).filter(Boolean);P={list:shuffle(list),i:0,pick:null,right:0,mode:wrongTab,fromWrong:wrongTab==="wrong"};go("practice")});
+  $$("[data-goto]").forEach(b=>b.addEventListener("click",()=>{P=null;go(b.dataset.goto)}));
+  // 모의고사
+  on("#startMock",startMock);
+  $$("[data-mopt]").forEach(b=>b.addEventListener("click",()=>{M.ans[M.i]=+b.dataset.mopt;save();render()}));
+  on("#flagBtn",()=>{if(M.flag[M.i])delete M.flag[M.i];else M.flag[M.i]=1;save();render()});
+  on("#prevM",()=>{M.i--;M.arm=false;render()});
+  on("#nextM",()=>{M.i++;M.arm=false;render()});
+  $$("[data-jump]").forEach(b=>b.addEventListener("click",()=>{M.i=+b.dataset.jump;render();window.scrollTo(0,0)}));
+  on("#submitM",()=>{M.arm=true;render()});
+  on("#submitNo",()=>{M.arm=false;render()});
+  on("#submitYes",submitMock);
+  on("#quitMock",()=>{clearInterval(window._mt);M=null;S.live=null;save();toast("모의고사를 그만뒀어요");render()});
+  on("#newMock",()=>{M=null;render()});
+}
+
+/* ===================== 시작 ===================== */
+if(S.live&&S.live.list&&!S.live.done){M=S.live;M.arm=false;if(Date.now()>=M.end){submitMock()}else startTimer()}
+go(M&&!M.done?"mock":"home");
+
+</script>
+<script src="capacitor.js"></script>
+<script>
+(function(){try{var C=window.Capacitor;if(!C||!C.Plugins||!C.Plugins.App)return;
+C.Plugins.App.addListener("backButton",function(){
+ if(typeof M!=="undefined"&&M&&!M.done&&view==="mock"){toast("모의고사 중에는 '그만두기' 버튼을 눌러 주세요");return}
+ if(typeof P!=="undefined"&&P&&view==="practice"){P=null;render();return}
+ if(view!=="home"){go("home");return}
+ C.Plugins.App.exitApp();});}catch(e){}})();
+</script>
+</body>
+</html>
