@@ -25,10 +25,17 @@ jobs:
         run: |
           mkdir -p www
           cp index.html manifest.json icon-192.png icon-512.png www/
+          sed -i "s/__APP_VERSION__/1.${{ github.run_number }}/" www/index.html
+          grep -q "1.${{ github.run_number }}" www/index.html
           npm init -y
-          npm install @capacitor/core@7 @capacitor/cli@7 @capacitor/android@7 @capacitor/app@7
+          npm install @capacitor/core@7 @capacitor/cli@7 @capacitor/android@7 @capacitor/app@7 @capacitor/local-notifications@7
           cp node_modules/@capacitor/core/dist/capacitor.js www/
           npx cap add android
+          MAN=android/app/src/main/AndroidManifest.xml
+          grep -q POST_NOTIFICATIONS $MAN || sed -i 's#<uses-permission android:name="android.permission.INTERNET" />#<uses-permission android:name="android.permission.INTERNET" />\n    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />#' $MAN
+          grep -q POST_NOTIFICATIONS $MAN
+          mkdir -p android/app/src/main/res/drawable
+          cp ic_stat_note.png android/app/src/main/res/drawable/ic_stat_note.png
           sed -i 's/targetSdkVersion = [0-9]*/targetSdkVersion = 34/' android/variables.gradle
           sed -i "s/versionCode 1$/versionCode ${{ github.run_number }}/; s/versionName \"1.0\"/versionName \"1.${{ github.run_number }}\"/" android/app/build.gradle
           RES=android/app/src/main/res

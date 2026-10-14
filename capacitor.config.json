@@ -1,5 +1,11 @@
 {
   "appId": "io.github.baek219.ctflnote",
   "appName": "합격노트",
-  "webDir": "www"
+  "webDir": "www",
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_note",
+      "iconColor": "#E5405E"
+    }
+  }
 }
